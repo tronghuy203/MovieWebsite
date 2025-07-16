@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import { loginUser } from "../../redux/apiAuth";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const { error, errorMessage } = useSelector((state) => state.auth.login);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleLogin =(e)=>{
-         e.preventDefault();
-        const User = ({
-            email: email,
-            password: password,
-        })
-        loginUser(User,dispatch,navigate);
-    }
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const User = {
+      email: email,
+      password: password,
+    };
+    loginUser(User, dispatch, navigate);
+  };
   return (
     <div className="relative">
       <div className="absolute bg-slate-600 z-0 w-full h-screen"></div>
@@ -32,27 +33,30 @@ const Login = () => {
               type="text"
               placeholder="Nhập Email của bạn"
               className="w-72 lg:w-96 h-10 pl-2 rounded-md placeholder:text-sm text-black"
-              onChange={(e)=> setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="text-white flex flex-col ml-4 lg:ml-14 space-y-1">
             <label className="text-sm lg:text-base">Mật khẩu</label>
             <input
               type="password"
-              placeholder="Nhập Mạt khẩu của bạn"
+              placeholder="Nhập Mật khẩu của bạn"
               className="w-72 lg:w-96  h-10 pl-2 rounded-md placeholder:text-sm text-black"
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-        <div className="flex items-center justify-center">
-              <button className=" text-white bg-slate-700 w-32 h-12 leading-[48px] text-center rounded-md my-3">
-            Đăng nhập
-          </button>
-        </div>
+          {error && <p className="text-red-500 text-center">{errorMessage}</p>}
+          <div className="flex items-center justify-center">
+            <button className=" text-white bg-slate-700 w-32 h-12 leading-[48px] text-center rounded-md my-3">
+              Đăng nhập
+            </button>
+          </div>
 
           <p className="text-gray-300 text-center text-sm lg:text-base">
             Bạn chưa có tài khoản,{" "}
-            <Link to="/register" className="text-yellow-300">Đăng ký ngay</Link>
+            <Link to="/register" className="text-yellow-300">
+              Đăng ký ngay
+            </Link>
           </p>
         </form>
       </div>

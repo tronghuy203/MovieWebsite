@@ -7,11 +7,13 @@ const authSlice = createSlice({
       isFetching: false,
       currentUser: null,
       error: false,
+      errorMessage: "",
     },
     register: {
       isFetching: false,
       success: false,
       error: false,
+      errorMessage: "",
     },
     otp: {
       isFetching: false,
@@ -28,9 +30,10 @@ const authSlice = createSlice({
       state.login.currentUser = action.payload;
       state.login.error = false;
     },
-    getLoginFailed: (state) => {
+    getLoginFailed: (state, action) => {
       state.login.isFetching = false;
       state.login.error = true;
+      state.login.errorMessage = action.payload;
     },
     getRegisterStart: (state) => {
       state.register.isFetching = true;
@@ -40,9 +43,10 @@ const authSlice = createSlice({
       state.register.success = true;
       state.register.error = false;
     },
-    getRegisterFailed: (state) => {
+    getRegisterFailed: (state, action) => {
       state.register.isFetching = false;
       state.register.error = true;
+      state.register.errorMessage = action.payload;
     },
     getOtpStart: (state) => {
       state.otp.isFetching = true;
@@ -60,8 +64,8 @@ const authSlice = createSlice({
     getLogoutStart: (state) => {
       state.login.isFetching = true;
     },
-    getLogoutSuccess: (state,action) => {
-       state.login.isFetching = false;
+    getLogoutSuccess: (state, action) => {
+      state.login.isFetching = false;
       state.login.currentUser = action.payload;
       state.login.error = false;
     },
@@ -84,6 +88,6 @@ export const {
   getOtpFailed,
   getLogoutStart,
   getLogoutSuccess,
-  getLogoutFailed
+  getLogoutFailed,
 } = authSlice.actions;
 export default authSlice.reducer;

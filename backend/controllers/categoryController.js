@@ -30,14 +30,34 @@ const categoryController = {
       return res.status(500).json(error);
     }
   },
-  deleteCategory: async(req,res)=>{
+  deleteCategory: async (req, res) => {
     try {
-        const deleteCategory = await Category.findByIdAndDelete(req.params.id);
-        res.status(200).json("Xóa danh mục thành công")
+      const deleteCategory = await Category.findByIdAndDelete(req.params.id);
+      res.status(200).json("Xóa danh mục thành công");
     } catch (error) {
-        return res.status(500).json(error);
+      return res.status(500).json(error);
     }
-  }
+  },
+  getUniqueCategoryFromMovie: async (req, res) => {
+    try {
+      const category = await Category.aggregate([
+        {
+          $group: {
+            _id: "$title",
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            title: "$_id"
+          }
+        }
+      ]);
+      res.status(200).json(category)
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  },
 };
 
 module.exports = categoryController;

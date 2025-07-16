@@ -112,7 +112,7 @@ const authController = {
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
-        return res.status(403).json({ message: "email không tồn tại" });
+        return res.status(404).json({ message: "email không tồn tại" });
       }
       const comparePassword = await bcrypt.compare(
         req.body.password,

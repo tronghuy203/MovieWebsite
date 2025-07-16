@@ -8,6 +8,7 @@ import {
   getOtpFailed,
   getOtpStart,
   getOtpSuccess,
+  getRegisterFailed,
   getRegisterStart,
   getRegisterSuccess,
 } from "./authSlice";
@@ -20,8 +21,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     dispatch(getLoginSuccess(res.data));
     navigate("/");
   } catch (error) {
-    console.log(error);
-    dispatch(getLoginFailed());
+    dispatch(getLoginFailed(error.response?.data?.message || "Có lỗi kết nối. Vui lòng thử lại!"));
   }
 };
 
@@ -36,7 +36,7 @@ export const registerUser = async (user, dispatch, navigate) => {
     navigate("/verifyotp", { state: { email: user.email } });
   } catch (error) {
     console.log(error);
-    dispatch(getRegisterSuccess());
+    dispatch(getRegisterFailed(error.response?.data?.message || "Có lỗi xảy ra. Vui lòng thử lại"));
   }
 };
 
@@ -54,21 +54,20 @@ export const verifyOtp = async (otp, dispatch, navigate) => {
   }
 };
 
-export const logout = async (dispatch,accessToken, navigate, axiosJWT) => {
-    dispatch(getLogoutStart());
+export const logout = async (dispatch, accessToken, navigate, axiosJWT) => {
+  dispatch(getLogoutStart());
   try {
     await axiosJWT.post(
       "http://localhost:8000/v1/auth/logout",
-       {} ,
+      {},
       {
         headers: { token: `Bearer ${accessToken}` },
       }
     );
-    dispatch(getLogoutSuccess())
+    dispatch(getLogoutSuccess());
     navigate("/login");
   } catch (error) {
-    dispatch(getLogoutFailed())
+    dispatch(getLogoutFailed());
     throw error;
-    
   }
 };

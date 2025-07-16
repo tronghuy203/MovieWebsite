@@ -22,6 +22,8 @@ const middleware = {
    middleware.verifyToken(req, res,()=>{
     if(req.user && req.user.admin){
       next();
+    }else{
+      return res.status(400).json("Bạn không phải admin")
     }
    })
   }

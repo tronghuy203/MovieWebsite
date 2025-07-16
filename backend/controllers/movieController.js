@@ -12,7 +12,7 @@ const movieController = {
   },
   getAllMovie: async(req, res) =>{
     try {
-        const movie = await Movie.find();
+        const movie = await Movie.find().populate("category", "title");
         res.status(200).json(movie);
     } catch (error) {
         return res.status(500).json(error);

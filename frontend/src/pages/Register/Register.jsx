@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { loginUser, registerUser } from "../../redux/apiAuth";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Register = () => {
+    const {error, errorMessage} = useSelector((state)=> state.auth?.register)
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -66,6 +67,7 @@ const Register = () => {
               onChange={(e)=>setConfirmPassword(e.target.value)}
             />
           </div>
+          {error && <p className="text-red-500 text-center">{errorMessage}</p> }
         <div className="flex items-center justify-center">
               <button className=" text-white bg-slate-700 w-32 h-12 leading-[48px] text-center rounded-md my-3">
             Đăng ký
