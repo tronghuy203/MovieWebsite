@@ -45,7 +45,7 @@ export const MovieSlider = ({ movieList }) => {
               </p>
               <div className="relative mx-auto lg:mx-0 text-white w-24 my-3">
                 <div className="absolute inset-0 bg-white opacity-10 rounded-lg z-0"></div>
-                <div className="relative flex z-10 p-1 text-center">
+                <div className="relative flex z-10 p-1 justify-center">
                   <p>{movie.category.title}</p>
                 </div>
               </div>

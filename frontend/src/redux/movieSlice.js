@@ -13,6 +13,16 @@ const movieSlice = createSlice({
       dataCategory: [],
       error: false,
     },
+    movieByCategory: {
+      isFetching: false,
+      dataMovieByCategory: [],
+      error: false,
+    },
+    getIdMovie: {
+      isFetching: false,
+      dataIdMovie: {},
+      error: true,
+    },
   },
   reducers: {
     movieStart: (state) => {
@@ -39,6 +49,30 @@ const movieSlice = createSlice({
       state.category.isFetching = false;
       state.category.error = true;
     },
+    movieByCategoryStart: (state) => {
+      state.movieByCategory.isFetching = true;
+    },
+    movieByCategorySuccess: (state, action) => {
+      state.movieByCategory.isFetching = false;
+      state.movieByCategory.dataMovieByCategory = action.payload;
+      state.movieByCategory.error = false;
+    },
+    movieByCategoryFailed: (state) => {
+      state.movieByCategory.isFetching = false;
+      state.movieByCategory.error = true;
+    },
+    getIdMovieStart: (state) => {
+      state.getIdMovie.isFetching = true;
+    },
+    getIdMovieSuccess: (state, action) => {
+      state.getIdMovie.isFetching = false;
+      state.getIdMovie.dataIdMovie = action.payload;
+      state.getIdMovie.error = false;
+    },
+    getIdMovieFailed: (state) => {
+      state.getIdMovie.isFetching = false;
+      state.getIdMovie.error = true;
+    },
   },
 });
 
@@ -49,5 +83,11 @@ export const {
   categoryStart,
   categorySuccess,
   categoryFailed,
+  movieByCategoryStart,
+  movieByCategorySuccess,
+  movieByCategoryFailed,
+  getIdMovieStart,
+  getIdMovieSuccess,
+  getIdMovieFailed,
 } = movieSlice.actions;
 export default movieSlice.reducer;

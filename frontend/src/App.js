@@ -5,6 +5,8 @@ import Login from "./pages/Login/Login"
 import Register from './pages/Register/Register';
 import VerifyOtp from './pages/Register/VerifyOtp';
 import Home from './pages/Home/Home';
+import MovieByCategory from './pages/Home/MovieByCategory';
+import IntroduceMovie from './pages/Movie/IntroduceMovie';
 const App = () => {
   return (
     <Router>
@@ -14,6 +16,9 @@ const App = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/verifyotp" element={<VerifyOtp/>}/>
+        <Route path="/category/:slug" element={<MovieByCategory/>}/>
+        <Route path="/movie/:id" element={<IntroduceMovie/>}/>
+        <Route path="/category/:slug/movie/:id" element={<IntroduceMovie/>}/>
       </Routes>
     </Router>
   );

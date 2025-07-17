@@ -7,6 +7,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 export const Category = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.movie?.category?.dataCategory);
+
   console.log(category);
   useEffect(() => {
     getUniqueCategory(dispatch);
@@ -21,22 +22,12 @@ export const Category = () => {
     "bg-indigo-500",
     "bg-teal-500",
   ];
-  const slugify = (str) =>
-    str
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w\-]+/g, "")
-      .replace(/--+/g, "-")
-      .replace(/^-+|-+$/g, "");
-
   return (
     <div className="flex gap-4 flex-wrap px-4 py-2">
       {category.map((category, index) => (
         <Link
           key={index}
-          to={`/category/${slugify(category.title)}`}
+          to={`/category/${category.slug}`}
           className={`rounded-xl shadow-md w-40 h-32 lg:w-52 lg:h-32
         ${bgColors[index % bgColors.length]} hover:opacity-80`}
         >

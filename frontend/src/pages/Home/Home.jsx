@@ -23,7 +23,7 @@ const Home = () => {
   }, [user, navigate, dispatch, accessToken, axiosJWT]);
 
   return (
-    <div className="bg-[#191b24]">
+    <div className="bg-[#191b24] h-screen lg:h-full">
       <MovieSlider movieList={movie} />
       <Category/>
     </div>

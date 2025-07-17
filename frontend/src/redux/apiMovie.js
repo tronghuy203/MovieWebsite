@@ -3,6 +3,12 @@ import {
   categoryFailed,
   categoryStart,
   categorySuccess,
+  getIdMovieFailed,
+  getIdMovieStart,
+  getIdMovieSuccess,
+  movieByCategoryFailed,
+  movieByCategoryStart,
+  movieByCategorySuccess,
   movieFailed,
   movieStart,
   movieSuccess,
@@ -30,3 +36,28 @@ export const getUniqueCategory = async (dispatch) => {
     dispatch(categoryFailed());
   }
 };
+
+export const getMovieByCategory = async(category,dispatch,accessToken,axiosJWT)=>{
+  dispatch(movieByCategoryStart());
+  try {
+    const res = await axiosJWT.get(`http://localhost:8000/v1/movie/category/${category}`,{
+      headers: {token: `Bearer ${accessToken}`}
+    })
+    dispatch(movieByCategorySuccess(res.data));
+  } catch (error) {
+    dispatch(movieByCategoryFailed())
+  }
+}
+
+
+export const getIdMovie = async(id,dispatch,accessToken,axiosJWT)=>{
+  dispatch(getIdMovieStart());
+  try {
+    const res = await axiosJWT.get(`http://localhost:8000/v1/movie/${id}`,{
+      headers: {token: `Bearer ${accessToken}`}
+    })
+    dispatch(getIdMovieSuccess(res.data))
+  } catch (error) {
+    dispatch(getIdMovieFailed())
+  }
+}
