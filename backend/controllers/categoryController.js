@@ -43,17 +43,18 @@ const categoryController = {
       const category = await Category.aggregate([
         {
           $group: {
-            _id: "$title",
+            _id: { title: "$title", slug: "$slug" },
           },
         },
         {
           $project: {
             _id: 0,
-            title: "$_id"
-          }
-        }
+            title: "$_id.title",
+            slug: "$_id.slug",
+          },
+        },
       ]);
-      res.status(200).json(category)
+      res.status(200).json(category);
     } catch (error) {
       return res.status(500).json(error);
     }
