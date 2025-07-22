@@ -21,7 +21,6 @@ export const getAllMovie = async (dispatch, accessToken, axiosJWT) => {
       headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(movieSuccess(res.data));
-    console.log(res.data);
   } catch (error) {
     dispatch(movieFailed());
   }
@@ -43,7 +42,8 @@ export const getMovieByCategory = async(category,dispatch,accessToken,axiosJWT)=
     const res = await axiosJWT.get(`http://localhost:8000/v1/movie/category/${category}`,{
       headers: {token: `Bearer ${accessToken}`}
     })
-    dispatch(movieByCategorySuccess(res.data));
+    dispatch(movieByCategorySuccess({ slug: category,
+      getMovie: res.data.getMovie,}));
   } catch (error) {
     dispatch(movieByCategoryFailed())
   }

@@ -12,7 +12,7 @@ const categoryController = {
   },
   getAllCategory: async (req, res) => {
     try {
-      const category = await Category.find();
+      const category = await Category.find().sort({ createdAt: -1 });
       res.status(200).json(category);
     } catch (error) {
       return res.status(500).json(error);
@@ -52,6 +52,9 @@ const categoryController = {
             title: "$_id.title",
             slug: "$_id.slug",
           },
+        },
+        {
+          $sort: { title: 1 },
         },
       ]);
       res.status(200).json(category);

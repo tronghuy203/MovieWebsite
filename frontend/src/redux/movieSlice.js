@@ -54,7 +54,16 @@ const movieSlice = createSlice({
     },
     movieByCategorySuccess: (state, action) => {
       state.movieByCategory.isFetching = false;
-      state.movieByCategory.dataMovieByCategory = action.payload;
+      if (!state.movieByCategory.dataMovieByCategory?.result) {
+        state.movieByCategory.dataMovieByCategory = {
+          result: {},
+          getMovie: [],
+        };
+      }
+      state.movieByCategory.dataMovieByCategory.getMovie =
+        action.payload.getMovie;
+      state.movieByCategory.dataMovieByCategory.result[action.payload.slug] =
+        action.payload.getMovie;
       state.movieByCategory.error = false;
     },
     movieByCategoryFailed: (state) => {

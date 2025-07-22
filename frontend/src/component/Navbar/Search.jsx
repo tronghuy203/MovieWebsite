@@ -27,12 +27,12 @@ export const Search = () => {
   return (
     <div className="relative flex items-center justify-center">
       <div>
-        <div className="relative hidden lg:flex px-5">
+        <div className="relative hidden lg:flex px-5 ">
           <MagnifyingGlassIcon className="absolute mx-5 w-5 h-5 left-2 top-1/2 transform -translate-y-1/2 text-white" />
           <input
             type="search"
             placeholder="Tìm kiếm phim, diễn viên,..."
-            className="bg-gray-800 border-0 py-5 rounded-md w-72 h-8 pl-8 text-white placeholder:text-white placeholder:text-sm"
+            className="bg-gray-600 border-0 py-5 rounded-md w-72 h-8 pl-8 text-white placeholder:text-white placeholder:text-sm bg-opacity-50"
           />
         </div>
         <button
