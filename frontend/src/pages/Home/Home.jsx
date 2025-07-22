@@ -5,11 +5,11 @@ import { getAllMovie } from "../../redux/apiMovie";
 import { createAxios } from "../../createInstance";
 import { MovieSlider } from "./SliderMovie";
 import { Category } from "./Category";
+import { SliderMovieCategory } from "./SliderMovieCategory";
 
 const Home = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const movie = useSelector((state) => state.movie.movie?.dataMovie);
-  console.log(movie);
   const accessToken = user?.accessToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,9 +23,10 @@ const Home = () => {
   }, [user, navigate, dispatch, accessToken, axiosJWT]);
 
   return (
-    <div className="bg-[#191b24] h-screen lg:h-full">
+    <div className="bg-[#191b24] h-full lg:h-full">
       <MovieSlider movieList={movie} />
       <Category/>
+      <SliderMovieCategory accessToken={accessToken} axiosJWT={axiosJWT}/>
     </div>
   );
 };

@@ -22,7 +22,7 @@ const Login = () => {
   return (
     <div className="relative">
       <div className="absolute bg-slate-600 z-0 w-full h-screen"></div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-[320px] h-[370px] lg:w-[500px] lg:h-[400px] bg-slate-800 rounded-lg mt-5 ">
+      <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-[320px] h-[370px] lg:w-[500px] lg:h-[400px] bg-slate-800 rounded-lg mt-20 ">
         <form onSubmit={handleLogin} className="space-y-4">
           <h1 className="text-white text-center font-bold text-2xl lg:text-3xl mt-5">
             Đăng nhập

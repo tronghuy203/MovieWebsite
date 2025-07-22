@@ -24,13 +24,13 @@ const authController = {
       const { username, email, password, confirmPassword } = req.body;
       const existedemail = await User.findOne({ email: email });
       if (existedemail) {
-        return res.status(403).json({ message: "email đã tồn tại" });
+        return res.status(403).json({ message: "Email đã tồn tại" });
       }
 
       if (username.length < 6) {
         return res
           .status(400)
-          .json({ message: "tên đăng nhập phải nhiều hơn 6 ký tự" });
+          .json({ message: "Tên đăng nhập phải nhiều hơn 6 ký tự" });
       }
       if (password !== confirmPassword) {
         return res.status(400).json({ message: "Sai mật khẩu" });
@@ -112,14 +112,14 @@ const authController = {
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
-        return res.status(404).json({ message: "email không tồn tại" });
+        return res.status(404).json({ message: "Email không tồn tại" });
       }
       const comparePassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
       if (!comparePassword) {
-        return res.status(400).json({ message: "mật khẩu không đúng" });
+        return res.status(400).json({ message: "Mật khẩu không đúng" });
       }
 
       const accessToken = authController.generateAccessToken(user);
@@ -145,10 +145,10 @@ const authController = {
   requestRefreshToken: async(req, res)=>{
     const refreshToken = req.cookies.refreshToken;
     if(!refreshToken){
-      return res.status(401).json("RefreshToken không tồn tại");
+      return res.status(404).json("RefreshToken không tồn tại");
     };
     if(!refreshTokens.includes(refreshToken)){
-      return res.status(403).json("RefreshToken không hợp lệ");
+      return res.status(404).json("RefreshToken không hợp lệ");
     };
     try {
       const user = await new Promise((resolve, reject)=>{

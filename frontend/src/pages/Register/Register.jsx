@@ -26,7 +26,7 @@ const Register = () => {
   return (
     <div className="relative">
       <div className="absolute bg-slate-600 z-0 w-full h-[750px]"></div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-[320px] h-[540px] lg:w-[500px] lg:h-[550px] bg-slate-800 rounded-lg my-5 ">
+      <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-[320px] h-[540px] lg:w-[500px] lg:h-[550px] bg-slate-800 rounded-lg my-5 mt-20 ">
         <form onSubmit={handleRegister} className="space-y-4">
           <h1 className="text-white text-center font-bold text-2xl lg:text-3xl mt-5">
             Đăng ký

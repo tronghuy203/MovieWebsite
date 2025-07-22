@@ -8,7 +8,6 @@ export const Category = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.movie?.category?.dataCategory);
 
-  console.log(category);
   useEffect(() => {
     getUniqueCategory(dispatch);
   }, [dispatch]);
@@ -23,7 +22,7 @@ export const Category = () => {
     "bg-teal-500",
   ];
   return (
-    <div className="flex gap-4 flex-wrap px-4 py-2">
+    <div className="flex gap-4 flex-wrap h-full w-full px-4 py-2">
       {category.map((category, index) => (
         <Link
           key={index}
@@ -31,7 +30,9 @@ export const Category = () => {
           className={`rounded-xl shadow-md w-40 h-32 lg:w-52 lg:h-32
         ${bgColors[index % bgColors.length]} hover:opacity-80`}
         >
-          <h1 className="text-white px-4 py-2 pt-10 text-2xl font-bold ">{category.title}</h1>
+          <h1 className="text-white px-4 py-2 pt-10 text-2xl font-bold ">
+            {category.title}
+          </h1>
           <div className="flex space-x-1 text-white px-4 py-2">
             <p className="text-sm flex justify-start ">Xem chủ để</p>
             <ArrowRightIcon className="w-5 h-5" />

@@ -7,6 +7,7 @@ import VerifyOtp from './pages/Register/VerifyOtp';
 import Home from './pages/Home/Home';
 import MovieByCategory from './pages/Home/MovieByCategory';
 import IntroduceMovie from './pages/Movie/IntroduceMovie';
+import Footer from './component/Footer/Footer';
 const App = () => {
   return (
     <Router>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/movie/:id" element={<IntroduceMovie/>}/>
         <Route path="/category/:slug/movie/:id" element={<IntroduceMovie/>}/>
       </Routes>
+      <Footer/>
     </Router>
   );
 }
