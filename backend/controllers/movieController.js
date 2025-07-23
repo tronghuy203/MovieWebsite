@@ -1,17 +1,77 @@
 const Movie = require("../model/Movie");
 const Category = require("../model/Category");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
+const extDir = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+};
+extDir("uploads/poster");
+extDir("uploads/trailer");
+extDir("uploads/video");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    if (file.fieldname === "poster" || file.fieldname === "poster2") {
+      cb(null, "uploads/poster");
+    } else if (file.fieldname === "trailer") {
+      cb(null, "uploads/trailer");
+    } else if (file.fieldname === "video") {
+      cb(null, "uploads/video");
+    } else {
+      cb(null, "uploads/others");
+    }
+  },
+  filename: function(req, file, cb){
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {fileSize: 1024 * 1024 * 500},
+  fileFilter: function(req, file, cb){
+    const posterTypes = /png|jpg|jpeg|webp/;
+    const trailerTypes = /mp4|mov|mkv|avi/;
+    const videoTypes = /mp4|mov|mkv|avi/;
+    const ext = path.extname(file.originalname).toLowerCase();
+    if((file.fieldname === "poster" || file.fieldname === "poster2")  && posterTypes.test(ext)){
+      return cb(null, true);
+    }else if(file.fieldname === "trailer" && trailerTypes.test(ext)){
+      return cb(null, true);
+    }else if(file.fieldname === "video" && videoTypes.test(ext)){
+      return cb(null, true);
+    }else{
+      return cb(new Error("File không đúng định dạng."));
+    }
+  }
+})
 
 const movieController = {
   addMovie: async (req, res) => {
     try {
-      const newMovie = new Movie(req.body);
+      const files = req.files;
+      const posterUrl = files.poster ? `uploads/poster/${files.poster[0].filename}`: "";
+      const posterUrl2 = files.poster2 ? `uploads/poster/${files.poster2[0].filename}`: "";
+      const trailerUrl = files.trailer ? `uploads/trailer/${files.trailer[0].filename}` :"";
+      const videoUrl = files.video ? `uploads/video/${files.video[0].filename}`: "";
+      const newMovie = new Movie({
+        ...req.body,
+        posterUrl,
+        posterUrl2,
+        trailerUrl,
+        videoUrl
+      })
       const savedMovie = await newMovie.save();
       res.status(200).json(savedMovie);
     } catch (error) {
       return res.status(500).json(error);
     }
   },
-  
+
   getAllMovie: async (req, res) => {
     try {
       const movie = await Movie.find().populate("category", "title");

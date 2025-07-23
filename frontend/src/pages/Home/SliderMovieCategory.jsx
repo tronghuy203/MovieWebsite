@@ -86,7 +86,7 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
                   <div key={movie._id} className="p-2">
                     <Link to={`movie/${movie._id}`}>
                       <img
-                        src={movie.posterUrl2}
+                        src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl2}`}
                         alt={movie.title}
                         className="w-full h-48 object-cover rounded-lg"
                       />
