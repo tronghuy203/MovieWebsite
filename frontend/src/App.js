@@ -8,6 +8,7 @@ import Home from './pages/Home/Home';
 import MovieByCategory from './pages/Home/MovieByCategory';
 import IntroduceMovie from './pages/Movie/IntroduceMovie';
 import Footer from './component/Footer/Footer';
+import WatchMovie from './pages/Movie/WatchMovie';
 const App = () => {
   return (
     <Router>
@@ -19,7 +20,9 @@ const App = () => {
         <Route path="/verifyotp" element={<VerifyOtp/>}/>
         <Route path="/category/:slug" element={<MovieByCategory/>}/>
         <Route path="/movie/:id" element={<IntroduceMovie/>}/>
+        <Route path="/watch/:id" element={<WatchMovie/>}/>
         <Route path="/category/:slug/movie/:id" element={<IntroduceMovie/>}/>
+  
       </Routes>
       <Footer/>
     </Router>

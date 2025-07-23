@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { getIdMovie } from "../../redux/apiMovie";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 
@@ -29,15 +29,6 @@ const IntroduceMovie = () => {
     }
     return `${duration} phút`;
   };
-  const getYoutubeEmbedUrl = (url) => {
-    const regex =
-      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/;
-    const match = url.match(regex);
-    if (match && match[1]) {
-      return `https://www.youtube.com/embed/${match[1]}`;
-    }
-    return null;
-  };
 
   return (
     <div className="relative bg-[#191b24] w-full ">
@@ -45,7 +36,7 @@ const IntroduceMovie = () => {
         <div className="">
           <div className="">
             <img
-              src={dataIdMovie.posterUrl2}
+              src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.posterUrl2}`}
               alt={dataIdMovie.title}
               className="relative w-full h-[500px]"
             />
@@ -58,7 +49,7 @@ const IntroduceMovie = () => {
               <div className="p-10 text-white space-y-4">
                 <div className="flex flex-col items-center lg:items-start space-y-4">
                   <img
-                    src={dataIdMovie.posterUrl}
+                    src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.posterUrl}`}
                     alt={dataIdMovie.title}
                     className="w-44 h-60 rounded-lg"
                   />
@@ -78,6 +69,13 @@ const IntroduceMovie = () => {
                     </div>
                   ))}
                 </div>
+               <div className="py-3">
+                 <Link to={`/watch/${dataIdMovie._id}`}>
+                  <button className="bg-gradient-to-r from-[rgb(205,171,21)] to-[rgb(240,224,150)] text-black font-bold w-28 h-10 rounded-full ">
+                    Xem ngay
+                  </button>
+                </Link>
+               </div>
                 <div className="w-80">
                   <p className="text-[15px]">Giới thiệu:</p>
                   <p className="text-sm text-[rgba(215,217,206,0.6)]">
@@ -106,14 +104,13 @@ const IntroduceMovie = () => {
               {dataIdMovie.trailerUrl && (
                 <div className="lg:p-10 px-10">
                   <div className="aspect-w-16 aspect-h-9">
-                    <iframe
-                      className="lg:w-[700px] lg:h-[400px] rounded-xl"
-                      src={getYoutubeEmbedUrl(dataIdMovie.trailerUrl)}
-                      title="Trailer"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+                    <video controls>
+                      {" "}
+                      <source
+                        src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.trailerUrl}`}
+                        type="video/mp4"
+                      ></source>{" "}
+                    </video>
                   </div>
                 </div>
               )}

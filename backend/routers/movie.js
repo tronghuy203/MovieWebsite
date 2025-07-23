@@ -5,8 +5,9 @@ const router = require("express").Router();
 
 router.post(
   "/addMovie",
-  upload.single([
+  upload.fields([
     { name: "poster", maxCount: 1 },
+    { name: "poster2", maxCount: 1 },
     { name: "trailer", maxCount: 1 },
     { name: "video", maxCount: 1 },
   ]),
