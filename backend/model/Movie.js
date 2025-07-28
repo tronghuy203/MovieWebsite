@@ -13,7 +13,7 @@ const movieSchema = new mongoose.Schema(
     },
     posterUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     posterUrl2: {
       type: String,
@@ -21,30 +21,30 @@ const movieSchema = new mongoose.Schema(
     },
     trailerUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     releaseYear: {
       type: Number,
-      required: true,
+      required: false,
     },
     category: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true,
+        required: false,
       },
     ],
     country: {
       type: String,
-      required: true,
+      required: false,
     },
     videoUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     duration: {
       type: Number,
-      required: true,
+      required: false,
     },
     status: {
       type: String,

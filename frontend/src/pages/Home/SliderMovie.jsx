@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 export const MovieSlider = ({ movieList }) => {
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
-  const slider1 = useRef(null);
-  const slider2 = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
@@ -17,7 +15,6 @@ export const MovieSlider = ({ movieList }) => {
         asNavFor={nav2}
         ref={(slider) => {
           setNav1(slider);
-          slider1.current = slider;
         }}
         arrows={false}
         fade
@@ -74,7 +71,6 @@ export const MovieSlider = ({ movieList }) => {
           asNavFor={nav1}
           ref={(slider) => {
             setNav2(slider);
-            slider2.current = slider;
           }}
           slidesToShow={5}
           swipe={false}

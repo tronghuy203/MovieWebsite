@@ -21,7 +21,17 @@ const movieSlice = createSlice({
     getIdMovie: {
       isFetching: false,
       dataIdMovie: {},
-      error: true,
+      error: false,
+    },
+    createMovie: {
+      isFetching: false,
+      dataNewMovie: {},
+      error: false,
+    },
+    deleteMovie: {
+      isFetching: false,
+      success: false,
+      error: false,
     },
   },
   reducers: {
@@ -82,6 +92,42 @@ const movieSlice = createSlice({
       state.getIdMovie.isFetching = false;
       state.getIdMovie.error = true;
     },
+    createMovieStart: (state)=>{
+      state.createMovie.isFetching= true;
+    },
+    createMovieSuccess: (state,action)=>{
+      state.createMovie.isFetching = false; 
+      state.createMovie.dataNewMovie = action.payload;
+      state.createMovie.error = false;
+    },
+    createMovieFailed: (state)=>{
+      state.createMovie.isFetching = false;
+      state.createMovie.error = false;
+    },
+    updateMovieIdStart: (state) => {
+      state.getIdMovie.isFetching = true;
+    },
+    updateMovieIdSuccess: (state, action) => {
+      state.getIdMovie.isFetching = false;
+      state.getIdMovie.dataIdMovie = action.payload;
+      state.getIdMovie.error = false;
+    },
+    updateMovieIdFailed: (state) => {
+      state.getIdMovie.isFetching = false;
+      state.getIdMovie.error = true;
+    },
+    deleteMovieStart: (state) => {
+      state.deleteMovie.isFetching = true;
+    },
+    deleteMovieSuccess: (state) => {
+      state.deleteMovie.isFetching = false;
+      state.deleteMovie.success = true;
+      state.deleteMovie.error = false;
+    },
+    deleteMovieFailed: (state) => {
+      state.deleteMovie.isFetching = false;
+      state.deleteMovie.error = true;
+    },
   },
 });
 
@@ -98,5 +144,14 @@ export const {
   getIdMovieStart,
   getIdMovieSuccess,
   getIdMovieFailed,
+  createMovieStart,
+  createMovieSuccess,
+  createMovieFailed,
+  updateMovieIdStart,
+  updateMovieIdSuccess,
+  updateMovieIdFailed,
+  deleteMovieStart,
+  deleteMovieSuccess,
+  deleteMovieFailed,
 } = movieSlice.actions;
 export default movieSlice.reducer;

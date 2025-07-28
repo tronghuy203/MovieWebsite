@@ -53,7 +53,7 @@ const upload = multer({
 const movieController = {
   addMovie: async (req, res) => {
     try {
-      const files = req.files;
+      const files = req.files || {};
       const posterUrl = files.poster ? `uploads/poster/${files.poster[0].filename}`: "";
       const posterUrl2 = files.poster2 ? `uploads/poster/${files.poster2[0].filename}`: "";
       const trailerUrl = files.trailer ? `uploads/trailer/${files.trailer[0].filename}` :"";
@@ -96,20 +96,63 @@ const movieController = {
   },
   updateMovie: async (req, res) => {
     try {
-      const movie = Movie.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+      const movieId = req.params.id
+      const movie = await Movie.findById(movieId);
       if (!movie) {
         return res.status(403).json("Không tìm thấy phim");
       }
-      res.status(200).json(movie);
+
+      const files = req.files || {};
+      const updateData = {...req.body};
+      if(files.poster){
+        if(movie.posterUrl && fs.existsSync(movie.posterUrl)){
+          fs.unlinkSync(movie.posterUrl);
+        }
+        updateData.posterUrl = `uploads/poster/${files.poster[0].filename}`;
+      };
+      if(files.poster2){
+        if(movie.posterUrl2 && fs.existsSync(movie.posterUrl2)){
+          fs.unlinkSync(movie.posterUrl2);
+        };
+        updateData.posterUrl2 = `uploads/poster/${files.poster2[0].filename}`;
+      }
+      if(files.trailer){
+        if(movie.trailerUrl && fs.existsSync(movie.trailerUrl)){
+          fs.unlinkSync(movie.trailerUrl);
+        }
+        updateData.trailerUrl = `uploads/trailer/${files.trailer[0].filename}`;
+      };
+      if(files.video){
+        if(movie.videoUrl && fs.existsSync(movie.videoUrl)){
+          fs.unlinkSync(movie.videoUrl);
+        }
+        updateData.videoUrl = `uploads/video/${files.video[0].filename}`;
+      }
+      const updatedMovie = await Movie.findByIdAndUpdate(movieId,updateData,{
+        new: true,
+      })
+      res.status(200).json(updatedMovie);
     } catch (error) {
       return res.status(500).json(error);
     }
   },
   deleteMovie: async (req, res) => {
     try {
-      const movie = Movie.findByIdAndDelete(req.params.id);
+      const movie = await Movie.findByIdAndDelete(req.params.id);
+      if(movie){
+        if(movie.posterUrl && fs.existsSync(movie.posterUrl)){
+          fs.unlinkSync(movie.posterUrl);
+        };
+        if(movie.posterUrl2 && fs.existsSync(movie.posterUrl2)){
+          fs.unlinkSync(movie.posterUrl2);
+        };
+        if(movie.trailerUrl && fs.existsSync(movie.trailerUrl)){
+          fs.unlinkSync(movie.trailerUrl);
+        };
+        if(movie.videoUrl && fs.existsSync(movie.videoUrl)){
+          fs.unlinkSync(movie.videoUrl);
+        }
+      }
       res.status(200).json("Xóa phim thành công");
     } catch (error) {
       return res.status(500).json(error);
