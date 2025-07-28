@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getMovieByCategory } from "../../redux/apiMovie";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,16 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
   const moviesByCategory = useSelector(
     (state) => state.movie?.movieByCategory?.dataMovieByCategory
   );
+
+  const [isDragging, setIsDragging] = useState(false);
+  const handleMouseDown = () => setIsDragging(false);
+  const handleMouseMove = () => setIsDragging(true);
+
+  const handleClick = (e)=>{
+    if(isDragging){
+      e.preventDefault();
+    }
+  }
   useEffect(() => {
     if (categories?.length > 0) {
       categories.forEach((cat) => {
@@ -19,6 +29,7 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
       });
     }
   }, [categories, dispatch, accessToken, axiosJWT]);
+
   const PrevArrow = (props) => {
     const { onClick } = props;
     return (
@@ -84,7 +95,7 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
               >
                 {moviesByCategory.result[cat.slug].map((movie) => (
                   <div key={movie._id} className="p-2">
-                    <Link to={`movie/${movie._id}`}>
+                    <Link to={`movie/${movie._id}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onClick={handleClick}>
                       <img
                         src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl2}`}
                         alt={movie.title}

@@ -38,13 +38,13 @@ const IntroduceMovie = () => {
             <img
               src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.posterUrl2}`}
               alt={dataIdMovie.title}
-              className="relative w-full h-[500px]"
+              className="relative w-full h-[500px] object-cover"
             />
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-transparent to-black/10"></div>
           </div>
 
-          <div className="relative lg:flex bg-[#191b24] w-full h-auto -mt-24">
+          <div className="relative lg:flex bg-[#191b24] w-full h-auto -mt-10">
             <div className="lg:w-[500px]">
               <div className="p-10 text-white space-y-4">
                 <div className="flex flex-col items-center lg:items-start space-y-4">
@@ -69,7 +69,7 @@ const IntroduceMovie = () => {
                     </div>
                   ))}
                 </div>
-               <div className="py-3">
+               <div className="py-3 flex justify-center lg:justify-start">
                  <Link to={`/watch/${dataIdMovie._id}`}>
                   <button className="bg-gradient-to-r from-[rgb(205,171,21)] to-[rgb(240,224,150)] text-black font-bold w-28 h-10 rounded-full ">
                     Xem ngay
@@ -103,8 +103,8 @@ const IntroduceMovie = () => {
             <div>
               {dataIdMovie.trailerUrl && (
                 <div className="lg:p-10 px-10">
-                  <div className="aspect-w-16 aspect-h-9">
-                    <video controls>
+                  <div className="w-[300px] lg:w-[700px]">
+                    <video key={dataIdMovie.trailerUrl} controls>
                       {" "}
                       <source
                         src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.trailerUrl}`}

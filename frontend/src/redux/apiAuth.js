@@ -19,7 +19,11 @@ export const loginUser = async (user, dispatch, navigate) => {
   try {
     const res = await axios.post("http://localhost:8000/v1/auth/login", user);
     dispatch(getLoginSuccess(res.data));
-    navigate("/");
+    if(res.data.admin){
+      navigate("/admin");
+    }else{
+      navigate("/");
+    }
   } catch (error) {
     dispatch(getLoginFailed(error.response?.data?.message || "Có lỗi kết nối. Vui lòng thử lại!"));
   }
