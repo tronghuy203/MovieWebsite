@@ -6,6 +6,7 @@ import { createAxios } from "../../createInstance";
 import { MovieSlider } from "./SliderMovie";
 import { Category } from "./Category";
 import { SliderMovieCategory } from "./SliderMovieCategory";
+import { getLoginSuccess } from "../../redux/authSlice";
 
 const Home = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -13,7 +14,7 @@ const Home = () => {
   const accessToken = user?.accessToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const axiosJWT = useMemo(() => createAxios(user, dispatch), [user, dispatch]);
+  const axiosJWT = useMemo(() => createAxios(user, dispatch, getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
     if (!user) {

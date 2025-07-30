@@ -17,7 +17,9 @@ import axios from "axios";
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(getLoginStart());
   try {
-    const res = await axios.post("http://localhost:8000/v1/auth/login", user);
+    const res = await axios.post("http://localhost:8000/v1/auth/login", user,{
+       withCredentials: true,
+    });
     dispatch(getLoginSuccess(res.data));
     if(res.data.admin){
       navigate("/admin");
@@ -63,10 +65,7 @@ export const logout = async (dispatch, accessToken, navigate, axiosJWT) => {
   try {
     await axiosJWT.post(
       "http://localhost:8000/v1/auth/logout",
-      {},
-      {
-        headers: { token: `Bearer ${accessToken}` },
-      }
+      {}
     );
     dispatch(getLogoutSuccess());
     navigate("/login");

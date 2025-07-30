@@ -97,7 +97,7 @@ const authController = {
     return jwt.sign(
       { id: user.id, admin: user.admin },
       process.env.ACCESSTOKEN,
-      { expiresIn: "1d" }
+      { expiresIn: "10s" }
     );
   },
   generateRefreshToken: (user) => {
@@ -130,7 +130,7 @@ const authController = {
         httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "strict",
+        sameSite: "lax",
       })
 
       const {password, ...other} = user._doc;
@@ -145,10 +145,10 @@ const authController = {
   requestRefreshToken: async(req, res)=>{
     const refreshToken = req.cookies.refreshToken;
     if(!refreshToken){
-      return res.status(404).json("RefreshToken không tồn tại");
+      return res.status(401).json("RefreshToken không tồn tại");
     };
     if(!refreshTokens.includes(refreshToken)){
-      return res.status(404).json("RefreshToken không hợp lệ");
+      return res.status(403).json("RefreshToken không hợp lệ");
     };
     try {
       const user = await new Promise((resolve, reject)=>{
@@ -165,11 +165,11 @@ const authController = {
       const newRefreshToken = authController.generateRefreshToken(user);
       refreshTokens.push(newRefreshToken);
 
-      res.cookie("refreshToken", refreshToken,{
+      res.cookie("refreshToken", newRefreshToken,{
         httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "strict",
+        sameSite: "lax",
       })
       res.status(200).json({accessToken: newAccessToken});
     } catch (error) {

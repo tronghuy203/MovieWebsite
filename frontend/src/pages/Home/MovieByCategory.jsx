@@ -3,6 +3,7 @@ import { getMovieByCategory } from "../../redux/apiMovie";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { getLoginSuccess } from "../../redux/authSlice";
 
 const MovieByCategory = () => {
   const { slug } = useParams();
@@ -16,7 +17,7 @@ const MovieByCategory = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
 
   const accessToken = user?.accessToken;
-  const axiosJWT = useMemo(() => createAxios(user, dispatch), [user, dispatch]);
+  const axiosJWT = useMemo(() => createAxios(user, dispatch,getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
     if (!user) {

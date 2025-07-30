@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteMovie, getAllMovie } from "../../redux/apiMovie";
 import { createAxios } from "../../createInstance";
 import { Link } from "react-router-dom";
+import { getLoginSuccess } from "../../redux/authSlice";
 
 const ManageMovie = () => {
   const dataMovie = useSelector((state) => state.movie.movie?.dataMovie);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const accessToken = user?.accessToken;
-  const axiosJWT = useMemo(() => createAxios(user, dispatch), [user, dispatch]);
+  const axiosJWT = useMemo(() => createAxios(user, dispatch,getLoginSuccess), [user, dispatch]);
   useEffect(() => {
     getAllMovie(dispatch, accessToken, axiosJWT);
   }, [dispatch, accessToken, axiosJWT]);
