@@ -26,9 +26,7 @@ import {
 export const getAllMovie = async (dispatch, accessToken, axiosJWT) => {
   dispatch(movieStart());
   try {
-    const res = await axiosJWT.get("http://localhost:8000/v1/movie", {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    const res = await axiosJWT.get("http://localhost:8000/v1/movie");
     dispatch(movieSuccess(res.data));
   } catch (error) {
     dispatch(movieFailed());
@@ -56,11 +54,7 @@ export const getMovieByCategory = async (
   dispatch(movieByCategoryStart());
   try {
     const res = await axiosJWT.get(
-      `http://localhost:8000/v1/movie/category/${category}`,
-      {
-        headers: { token: `Bearer ${accessToken}` },
-      }
-    );
+      `http://localhost:8000/v1/movie/category/${category}`);
     dispatch(
       movieByCategorySuccess({ slug: category, getMovie: res.data.getMovie })
     );
@@ -72,9 +66,7 @@ export const getMovieByCategory = async (
 export const getIdMovie = async (id, dispatch, accessToken, axiosJWT) => {
   dispatch(getIdMovieStart());
   try {
-    const res = await axiosJWT.get(`http://localhost:8000/v1/movie/${id}`, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    const res = await axiosJWT.get(`http://localhost:8000/v1/movie/${id}`);
     dispatch(getIdMovieSuccess(res.data));
     return res.data;
   } catch (error) {
@@ -90,7 +82,6 @@ export const createMovie = async (movie, dispatch, accessToken, axiosJWT) => {
       movie,
       {
         headers: {
-          token: `Bearer ${accessToken}`,
           "Content-Type": "multipart/form-data",
         },
       }
@@ -114,7 +105,9 @@ export const updateMovie = async (
       `${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`,
       updateMovie,
       {
-        headers: { token: `Bearer ${accessToken}` },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     dispatch(updateMovieIdSuccess(res.data));
@@ -126,9 +119,7 @@ export const updateMovie = async (
 export const deleteMovie = async (id, dispatch, accessToken, axiosJWT) => {
   dispatch(deleteMovieStart());
   try {
-    await axiosJWT.delete(`${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    await axiosJWT.delete(`${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`);
     dispatch(deleteMovieSuccess());
   } catch (error) {
     dispatch(deleteMovieFailed());
