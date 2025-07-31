@@ -24,7 +24,7 @@ const Register = () => {
         registerUser(newUser,dispatch,navigate);
     }
   return (
-    <div className="relative">
+    <div className="relative h-[750px]">
       <div className="absolute bg-slate-600 z-0 w-full h-[750px]"></div>
       <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-[320px] h-[540px] lg:w-[500px] lg:h-[550px] bg-slate-800 rounded-lg my-5 mt-20 ">
         <form onSubmit={handleRegister} className="space-y-4">

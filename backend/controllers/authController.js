@@ -97,7 +97,7 @@ const authController = {
     return jwt.sign(
       { id: user.id, admin: user.admin },
       process.env.ACCESSTOKEN,
-      { expiresIn: "10s" }
+      { expiresIn: "1d" }
     );
   },
   generateRefreshToken: (user) => {
@@ -130,7 +130,7 @@ const authController = {
         httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "lax",
+        sameSite: "strict",
       })
 
       const {password, ...other} = user._doc;
@@ -169,7 +169,7 @@ const authController = {
         httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "lax",
+        sameSite: "strict",
       })
       res.status(200).json({accessToken: newAccessToken});
     } catch (error) {

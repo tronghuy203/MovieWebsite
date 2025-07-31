@@ -6,6 +6,8 @@ const movieSlice = createSlice({
     movie: {
       isFetching: false,
       dataMovie: [],
+      totalPages: 1,
+      currentPage: 1,
       error: false,
     },
     category: {
@@ -40,7 +42,9 @@ const movieSlice = createSlice({
     },
     movieSuccess: (state, action) => {
       state.movie.isFetching = false;
-      state.movie.dataMovie = action.payload;
+      state.movie.dataMovie = action.payload.dataMovie;
+      state.movie.totalPages = action.payload.totalPages;
+      state.movie.currentPage = action.payload.currentPage;
       state.movie.error = false;
     },
     movieFailed: (state) => {

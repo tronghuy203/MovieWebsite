@@ -20,7 +20,7 @@ const Login = () => {
     loginUser(User, dispatch, navigate);
   };
   return (
-    <div className="relative">
+    <div className="relative h-screen">
       <div className="absolute bg-slate-600 z-0 w-full h-screen"></div>
       <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-[320px] h-[370px] lg:w-[500px] lg:h-[400px] bg-slate-800 rounded-lg mt-20 ">
         <form onSubmit={handleLogin} className="space-y-4">

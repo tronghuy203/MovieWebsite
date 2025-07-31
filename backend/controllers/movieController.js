@@ -25,46 +25,57 @@ const storage = multer.diskStorage({
       cb(null, "uploads/others");
     }
   },
-  filename: function(req, file, cb){
+  filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
-  }
+  },
 });
 
 const upload = multer({
   storage: storage,
-  limits: {fileSize: 1024 * 1024 * 500},
-  fileFilter: function(req, file, cb){
+  limits: { fileSize: 1024 * 1024 * 500 },
+  fileFilter: function (req, file, cb) {
     const posterTypes = /png|jpg|jpeg|webp/;
     const trailerTypes = /mp4|mov|mkv|avi/;
     const videoTypes = /mp4|mov|mkv|avi/;
     const ext = path.extname(file.originalname).toLowerCase();
-    if((file.fieldname === "poster" || file.fieldname === "poster2")  && posterTypes.test(ext)){
+    if (
+      (file.fieldname === "poster" || file.fieldname === "poster2") &&
+      posterTypes.test(ext)
+    ) {
       return cb(null, true);
-    }else if(file.fieldname === "trailer" && trailerTypes.test(ext)){
+    } else if (file.fieldname === "trailer" && trailerTypes.test(ext)) {
       return cb(null, true);
-    }else if(file.fieldname === "video" && videoTypes.test(ext)){
+    } else if (file.fieldname === "video" && videoTypes.test(ext)) {
       return cb(null, true);
-    }else{
+    } else {
       return cb(new Error("File không đúng định dạng."));
     }
-  }
-})
+  },
+});
 
 const movieController = {
   addMovie: async (req, res) => {
     try {
       const files = req.files || {};
-      const posterUrl = files.poster ? `uploads/poster/${files.poster[0].filename}`: "";
-      const posterUrl2 = files.poster2 ? `uploads/poster/${files.poster2[0].filename}`: "";
-      const trailerUrl = files.trailer ? `uploads/trailer/${files.trailer[0].filename}` :"";
-      const videoUrl = files.video ? `uploads/video/${files.video[0].filename}`: "";
+      const posterUrl = files.poster
+        ? `uploads/poster/${files.poster[0].filename}`
+        : "";
+      const posterUrl2 = files.poster2
+        ? `uploads/poster/${files.poster2[0].filename}`
+        : "";
+      const trailerUrl = files.trailer
+        ? `uploads/trailer/${files.trailer[0].filename}`
+        : "";
+      const videoUrl = files.video
+        ? `uploads/video/${files.video[0].filename}`
+        : "";
       const newMovie = new Movie({
         ...req.body,
         posterUrl,
         posterUrl2,
         trailerUrl,
-        videoUrl
-      })
+        videoUrl,
+      });
       const savedMovie = await newMovie.save();
       res.status(200).json(savedMovie);
     } catch (error) {
@@ -74,8 +85,20 @@ const movieController = {
 
   getAllMovie: async (req, res) => {
     try {
-      const movie = await Movie.find().populate("category", "title");
-      res.status(200).json(movie);
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const skip = (page - 1) * limit;
+
+      const total = await Movie.countDocuments();
+
+      const movie = await Movie.find()
+        .populate("category", "title")
+        .skip(skip)
+        .limit(limit)
+        .sort({ createAt: -1 });
+      res
+        .status(200)
+        .json({ total, page, totalPages: Math.ceil(total / limit), movie });
     } catch (error) {
       return res.status(500).json(error);
     }
@@ -96,41 +119,41 @@ const movieController = {
   },
   updateMovie: async (req, res) => {
     try {
-      const movieId = req.params.id
+      const movieId = req.params.id;
       const movie = await Movie.findById(movieId);
       if (!movie) {
         return res.status(403).json("Không tìm thấy phim");
       }
 
       const files = req.files || {};
-      const updateData = {...req.body};
-      if(files.poster){
-        if(movie.posterUrl && fs.existsSync(movie.posterUrl)){
+      const updateData = { ...req.body };
+      if (files.poster) {
+        if (movie.posterUrl && fs.existsSync(movie.posterUrl)) {
           fs.unlinkSync(movie.posterUrl);
         }
         updateData.posterUrl = `uploads/poster/${files.poster[0].filename}`;
-      };
-      if(files.poster2){
-        if(movie.posterUrl2 && fs.existsSync(movie.posterUrl2)){
+      }
+      if (files.poster2) {
+        if (movie.posterUrl2 && fs.existsSync(movie.posterUrl2)) {
           fs.unlinkSync(movie.posterUrl2);
-        };
+        }
         updateData.posterUrl2 = `uploads/poster/${files.poster2[0].filename}`;
       }
-      if(files.trailer){
-        if(movie.trailerUrl && fs.existsSync(movie.trailerUrl)){
+      if (files.trailer) {
+        if (movie.trailerUrl && fs.existsSync(movie.trailerUrl)) {
           fs.unlinkSync(movie.trailerUrl);
         }
         updateData.trailerUrl = `uploads/trailer/${files.trailer[0].filename}`;
-      };
-      if(files.video){
-        if(movie.videoUrl && fs.existsSync(movie.videoUrl)){
+      }
+      if (files.video) {
+        if (movie.videoUrl && fs.existsSync(movie.videoUrl)) {
           fs.unlinkSync(movie.videoUrl);
         }
         updateData.videoUrl = `uploads/video/${files.video[0].filename}`;
       }
-      const updatedMovie = await Movie.findByIdAndUpdate(movieId,updateData,{
+      const updatedMovie = await Movie.findByIdAndUpdate(movieId, updateData, {
         new: true,
-      })
+      });
       res.status(200).json(updatedMovie);
     } catch (error) {
       return res.status(500).json(error);
@@ -139,17 +162,17 @@ const movieController = {
   deleteMovie: async (req, res) => {
     try {
       const movie = await Movie.findByIdAndDelete(req.params.id);
-      if(movie){
-        if(movie.posterUrl && fs.existsSync(movie.posterUrl)){
+      if (movie) {
+        if (movie.posterUrl && fs.existsSync(movie.posterUrl)) {
           fs.unlinkSync(movie.posterUrl);
-        };
-        if(movie.posterUrl2 && fs.existsSync(movie.posterUrl2)){
+        }
+        if (movie.posterUrl2 && fs.existsSync(movie.posterUrl2)) {
           fs.unlinkSync(movie.posterUrl2);
-        };
-        if(movie.trailerUrl && fs.existsSync(movie.trailerUrl)){
+        }
+        if (movie.trailerUrl && fs.existsSync(movie.trailerUrl)) {
           fs.unlinkSync(movie.trailerUrl);
-        };
-        if(movie.videoUrl && fs.existsSync(movie.videoUrl)){
+        }
+        if (movie.videoUrl && fs.existsSync(movie.videoUrl)) {
           fs.unlinkSync(movie.videoUrl);
         }
       }

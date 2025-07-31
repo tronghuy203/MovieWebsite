@@ -23,11 +23,25 @@ import {
   updateMovieIdSuccess,
 } from "./movieSlice";
 
-export const getAllMovie = async (dispatch, accessToken, axiosJWT) => {
+export const getAllMovie = async (
+  dispatch,
+  accessToken,
+  axiosJWT,
+  page = 1,
+  limit = 5
+) => {
   dispatch(movieStart());
   try {
-    const res = await axiosJWT.get("http://localhost:8000/v1/movie");
-    dispatch(movieSuccess(res.data));
+    const res = await axiosJWT.get(
+      `http://localhost:8000/v1/movie?page=${page}&limit=${limit}`
+    );
+    dispatch(
+      movieSuccess({
+        dataMovie: res.data.movie,
+        totalPages: res.data.totalPages,
+        currentPage: res.data.page,
+      })
+    );
   } catch (error) {
     dispatch(movieFailed());
   }
@@ -54,7 +68,8 @@ export const getMovieByCategory = async (
   dispatch(movieByCategoryStart());
   try {
     const res = await axiosJWT.get(
-      `http://localhost:8000/v1/movie/category/${category}`);
+      `http://localhost:8000/v1/movie/category/${category}`
+    );
     dispatch(
       movieByCategorySuccess({ slug: category, getMovie: res.data.getMovie })
     );

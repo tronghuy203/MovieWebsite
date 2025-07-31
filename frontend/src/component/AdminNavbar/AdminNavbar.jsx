@@ -36,7 +36,7 @@ const AdminNavbar = () => {
             <Link to="/admin/manage-movie">
               <p
                 className={`w-56 h-10 mx-auto flex items-center justify-center text-center text-white  rounded-lg ${
-                  location.pathname === "/admin/manage-movie"
+                  location.pathname === "/admin/manage-movie" || location.pathname === "/admin/create-movie" || location.pathname.startsWith("/admin/update-movie")
                     ? "bg-[rgb(52,192,230)]"
                     : "hover:bg-[rgba(91,101,104,0.4)]"
                 } `}

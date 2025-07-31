@@ -101,7 +101,7 @@ const IntroduceMovie = () => {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="flex items-center justify-center py-5">
               {dataIdMovie.trailerUrl && (
                 <div className="lg:p-10 px-10">
                   <div className="w-[300px] lg:w-[700px]">
