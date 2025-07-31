@@ -27,7 +27,7 @@ const CreateMovie = () => {
   };
 
   return (
-    <div className="">
+    <div className="bg-slate-400 py-12">
       <form onSubmit={handleCreateMovie}>
         <div className="w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
           <h1 className="font-bold text-white  text-3xl text-center p-5">Thêm phim</h1>
