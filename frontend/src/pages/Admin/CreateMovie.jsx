@@ -7,11 +7,18 @@ import { getLoginSuccess } from "../../redux/authSlice";
 const CreateMovie = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
+  const categoryList = useSelector(
+    (state) => state.category.getAllCategory?.dataCategory
+  );
   const accessToken = user.accessToken;
-  const axiosJWT = useMemo(() => createAxios(user, dispatch,getLoginSuccess), [user, dispatch]);
+  const axiosJWT = useMemo(
+    () => createAxios(user, dispatch, getLoginSuccess),
+    [user, dispatch]
+  );
   const [newMovie, setNewMovie] = useState({
     title: "",
     description: "",
+    category: [],
     poster: null,
     poster2: null,
     trailer: null,
@@ -30,7 +37,9 @@ const CreateMovie = () => {
     <div className="bg-slate-400 py-12">
       <form onSubmit={handleCreateMovie}>
         <div className="w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
-          <h1 className="font-bold text-white  text-3xl text-center p-5">Thêm phim</h1>
+          <h1 className="font-bold text-white  text-3xl text-center p-5">
+            Thêm phim
+          </h1>
 
           <div className="flex flex-col mt-5">
             <label className=" text-white font-semibold mb-1">Tên phim</label>
@@ -60,6 +69,38 @@ const CreateMovie = () => {
               }
             />
           </div>
+          <div className="w-[600px] py-2">
+            <label className=" text-start text-white font-semibold mb-2">
+              Thể loại
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {categoryList?.map((cat) => (
+                <label
+                  key={cat._id}
+                  className="flex items-center space-x-2 text-white"
+                >
+                  <input
+                    type="checkbox"
+                    value={cat._id}
+                    checked={newMovie.category.includes(cat._id)}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      const value = e.target.value;
+                      setNewMovie((prev) => ({
+                        ...prev,
+                        category: checked
+                          ? [...prev.category, value]
+                          : prev.category.filter((id) => id !== value),
+                      }));
+                    }}
+                    className="form-checkbox h-4 w-4 text-blue-600"
+                  />
+                  <span>{cat.title}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
           <div className="flex flex-col">
             <label className="block text-white font-semibold mb-1">
               Ảnh chính

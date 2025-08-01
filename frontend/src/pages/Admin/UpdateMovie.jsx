@@ -10,6 +10,7 @@ const UpdateMovieId = () => {
   const [movie, setMovie] = useState({
     title: "",
     description: "",
+    category: [],
     poster: null,
     poster2: null,
     trailer: null,
@@ -25,15 +26,24 @@ const UpdateMovieId = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.login?.currentUser);
+  const categoryList = useSelector(
+    (state) => state.category.getAllCategory?.dataCategory
+  );
   const accessToken = user.accessToken;
-  const axiosJWT = useMemo(() => createAxios(user, dispatch, getLoginSuccess), [user, dispatch]);
+  const axiosJWT = useMemo(
+    () => createAxios(user, dispatch, getLoginSuccess),
+    [user, dispatch]
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getIdMovie(id, dispatch, accessToken, axiosJWT);
       if (data) {
+        const categoryIds = data.category.map((c) => c._id);
+        console.log(categoryIds);
         setMovie({
           ...data,
+          category: categoryIds,
           trailer: data.trailerUrl,
           video: data.videoUrl,
           previewPoster: `${process.env.REACT_APP_SERVERURL}/${data.posterUrl}`,
@@ -82,6 +92,37 @@ const UpdateMovieId = () => {
               }
               className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
             />
+          </div>
+          <div className="w-[600px] py-2">
+            <label className=" text-start text-white font-semibold mb-2">
+              Thể loại
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {categoryList?.map((cat) => (
+                <label
+                  key={cat._id}
+                  className="flex items-center space-x-2 text-white"
+                >
+                  <input
+                    type="checkbox"
+                    value={cat._id}
+                    checked={movie.category.includes(cat._id)}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      const value = e.target.value;
+                      setMovie((prev) => ({
+                        ...prev,
+                        category: checked
+                          ? [...prev.category, value]
+                          : prev.category.filter((id) => id !== value),
+                      }));
+                    }}
+                    className="form-checkbox h-4 w-4 text-blue-600"
+                  />
+                  <span>{cat.title}</span>
+                </label>
+              ))}
+            </div>
           </div>
           <div className="w-[600px] flex flex-col">
             <label className="block text-white font-semibold mb-1">
