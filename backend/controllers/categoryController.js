@@ -7,6 +7,7 @@ const categoryController = {
       const savedCategory = await newCategory.save();
       res.status(200).json(savedCategory);
     } catch (error) {
+      console.log(error)
       return res.status(500).json(error);
     }
   },

@@ -45,6 +45,19 @@ const AdminNavbar = () => {
               </p>
             </Link>
           </li>
+          <li>
+            <Link to="/admin/manage-category">
+              <p
+                className={`w-56 h-10 mx-auto flex items-center justify-center text-center text-white  rounded-lg ${
+                  location.pathname === "/admin/manage-category" 
+                    ? "bg-[rgb(52,192,230)]"
+                    : "hover:bg-[rgba(91,101,104,0.4)]"
+                } `}
+              >
+                Quản lý thể loại phim
+              </p>
+            </Link>
+          </li>
         </div>
         <li className="fixed bottom-5 left-3 flex justify-center items-center ">
           <button

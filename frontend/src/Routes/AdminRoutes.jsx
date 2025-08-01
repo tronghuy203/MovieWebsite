@@ -4,6 +4,7 @@ import Dashboard from "../pages/Admin/Dashboard";
 import ManageMovie from "../pages/Admin/ManageMovie";
 import UpdateMovieId from "../pages/Admin/UpdateMovie";
 import CreateMovie from "../pages/Admin/CreateMovie";
+import Category from "../pages/Admin/ManageCategory";
 
 
 const AdminRoutes = () => {
@@ -14,6 +15,7 @@ const AdminRoutes = () => {
         <Route path="/manage-movie" element={<ManageMovie />}></Route>
         <Route path="/update-movie/:id" element={<UpdateMovieId />}></Route>
         <Route path="/create-movie" element={<CreateMovie />}></Route>
+        <Route path="/manage-category" element={<Category />}></Route>
       </Route>
     </Routes>
   );
