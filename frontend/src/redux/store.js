@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import movieReducer from "./movieSlice";
-import categoryReducer from "./categorySlice"
+import categoryReducer from "./categorySlice";
+import reviewReducer from "./reviewSlice";
 
 import {
   persistStore,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   movie: movieReducer,
   category: categoryReducer,
+  review: reviewReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

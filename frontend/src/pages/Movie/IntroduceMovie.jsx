@@ -1,28 +1,45 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getIdMovie } from "../../redux/apiMovie";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { getLoginSuccess } from "../../redux/authSlice";
+import { createReview, getReview } from "../../redux/apiReview";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 const IntroduceMovie = () => {
   const { id } = useParams();
+  const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.login?.currentUser);
+  const review = useSelector((state) => state.review.review?.dataReview);
   const dataIdMovie = useSelector(
     (state) => state.movie.getIdMovie?.dataIdMovie
   );
   const accessToken = user?.accessToken;
-  const axiosJWT = useMemo(() => createAxios(user, dispatch, getLoginSuccess), [user, dispatch]);
+  const axiosJWT = useMemo(
+    () => createAxios(user, dispatch, getLoginSuccess),
+    [user, dispatch]
+  );
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
-    getIdMovie(id, dispatch, accessToken, axiosJWT);
-  }, [user, navigate, id, dispatch, accessToken, axiosJWT]);
+    getIdMovie(id, dispatch, axiosJWT);
+    getReview(id, dispatch, axiosJWT);
+  }, [user, navigate, id, dispatch, axiosJWT]);
+
+  const handleCreateReview = async () => {
+    const newReview = {
+      comment,
+      movieId: id,
+    };
+    await createReview(newReview, dispatch, axiosJWT);
+    await getReview(id, dispatch, axiosJWT);
+  };
 
   const formatDuration = (duration) => {
     if (duration >= 60) {
@@ -70,13 +87,13 @@ const IntroduceMovie = () => {
                     </div>
                   ))}
                 </div>
-               <div className="py-3 flex justify-center lg:justify-start">
-                 <Link to={`/watch/${dataIdMovie._id}`}>
-                  <button className="bg-gradient-to-r from-[rgb(205,171,21)] to-[rgb(240,224,150)] text-black font-bold w-28 h-10 rounded-full ">
-                    Xem ngay
-                  </button>
-                </Link>
-               </div>
+                <div className="py-3 flex justify-center lg:justify-start">
+                  <Link to={`/watch/${dataIdMovie._id}`}>
+                    <button className="bg-gradient-to-r from-[rgb(205,171,21)] to-[rgb(240,224,150)] text-black font-bold w-28 h-10 rounded-full ">
+                      Xem ngay
+                    </button>
+                  </Link>
+                </div>
                 <div className="w-80">
                   <p className="text-[15px]">Giới thiệu:</p>
                   <p className="text-sm text-[rgba(215,217,206,0.6)]">
@@ -101,20 +118,57 @@ const IntroduceMovie = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-center py-5">
-              {dataIdMovie.trailerUrl && (
-                <div className="lg:p-10 px-10">
-                  <div className="w-[300px] lg:w-[700px]">
-                    <video key={dataIdMovie.trailerUrl} controls>
-                      {" "}
-                      <source
-                        src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.trailerUrl}`}
-                        type="video/mp4"
-                      ></source>{" "}
-                    </video>
+            <div className="flex flex-col">
+              <div className="flex items-center justify-center py-5">
+                {dataIdMovie.trailerUrl && (
+                  <div className="lg:p-10 px-10">
+                    <div className="w-[300px] lg:w-[700px]">
+                      <video key={dataIdMovie.trailerUrl} controls>
+                        {" "}
+                        <source
+                          src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.trailerUrl}`}
+                          type="video/mp4"
+                        ></source>{" "}
+                      </video>
+                    </div>
                   </div>
+                )}
+              </div>
+              <div className="bg-[#ffffff0b] w-[670px] h-36 px-3 py-2 flex flex-col justify-center rounded-xl mb-5">
+                <textarea
+                  type="text"
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Viết bình luận"
+                  className=" w-full h-24 rounded-xl py-2 px-3 bg-[#191b24] text-white border-[rgba(113,110,110,0.27)] resize-none overflow-hidden"
+                />
+                <div className="flex justify-end mt-2">
+                  <button
+                    onClick={handleCreateReview}
+                    className="flex gap-2 items-center font-bold text-white"
+                  >
+                    Gửi <PaperAirplaneIcon className="w-6 h-6" />
+                  </button>
                 </div>
-              )}
+              </div>
+              <div>
+                {review?.map((review) => (
+                  <div key={review._id} className="text-white">
+                    <div className="flex space-x-2">
+                      <img
+                        src={review.userId.avatar}
+                        alt=""
+                        className="w-10 h-10 rounded-full"
+                      />
+                      <div>
+                        <h2>{review.userId.username}</h2>
+                        <div className="text-[rgba(215,217,206,0.6)] w-[650px] mb-4">
+                          {review.comment}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -18,11 +18,11 @@ const ManageMovie = () => {
     [user, dispatch]
   );
   useEffect(() => {
-    getAllMovie(dispatch, accessToken, axiosJWT, page);
-  }, [dispatch, accessToken, axiosJWT, page]);
+    getAllMovie(dispatch, axiosJWT, page);
+  }, [dispatch, axiosJWT, page]);
   const handleDeleteMovie = async (id) => {
-    await deleteMovie(id, dispatch, accessToken, axiosJWT);
-    getAllMovie(dispatch, accessToken, axiosJWT, page);
+    await deleteMovie(id, dispatch, axiosJWT);
+    getAllMovie(dispatch, axiosJWT, page);
   };
   return (
     <div className="bg-slate-400">

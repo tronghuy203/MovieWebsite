@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getMovieByCategory } from "../../redux/apiMovie";
 import { Link } from "react-router-dom";
 
-export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
+export const SliderMovieCategory = ({ axiosJWT }) => {
   const dispatch = useDispatch();
   const categories = useSelector(
     (state) => state.movie?.category?.dataCategory
@@ -17,18 +17,18 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
   const handleMouseDown = () => setIsDragging(false);
   const handleMouseMove = () => setIsDragging(true);
 
-  const handleClick = (e)=>{
-    if(isDragging){
+  const handleClick = (e) => {
+    if (isDragging) {
       e.preventDefault();
     }
-  }
+  };
   useEffect(() => {
     if (categories?.length > 0) {
       categories.forEach((cat) => {
-        getMovieByCategory(cat.slug, dispatch, accessToken, axiosJWT);
+        getMovieByCategory(cat.slug, dispatch, axiosJWT);
       });
     }
-  }, [categories, dispatch, accessToken, axiosJWT]);
+  }, [categories, dispatch, axiosJWT]);
 
   const PrevArrow = (props) => {
     const { onClick } = props;
@@ -80,8 +80,8 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
 
   return (
     <div className="space-y-10 pb-10">
-      {categories?.map((cat) => (
-        <div key={cat._id} className="text-white px-5">
+      {categories?.map((cat, index) => (
+        <div key={`${cat._id}-${index}`} className="text-white px-5">
           <h2 className="text-xl font-bold mb-2">{cat.title}</h2>
           {Array.isArray(moviesByCategory?.result?.[cat.slug]) &&
             moviesByCategory.result[cat.slug].length >= 1 && (
@@ -93,9 +93,17 @@ export const SliderMovieCategory = ({ accessToken, axiosJWT }) => {
                 nextArrow={<NextArrow />}
                 prevArrow={<PrevArrow />}
               >
-                {moviesByCategory.result[cat.slug].map((movie) => (
-                  <div key={movie._id} className="p-2">
-                    <Link to={`movie/${movie._id}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onClick={handleClick}>
+                {moviesByCategory.result[cat.slug].map((movie, index) => (
+                  <div
+                    key={`${cat.slug}-${movie._id}-${index}`}
+                    className="p-2"
+                  >
+                    <Link
+                      to={`movie/${movie._id}`}
+                      onMouseDown={handleMouseDown}
+                      onMouseMove={handleMouseMove}
+                      onClick={handleClick}
+                    >
                       <img
                         src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl2}`}
                         alt={movie.title}

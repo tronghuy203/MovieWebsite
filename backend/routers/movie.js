@@ -15,6 +15,7 @@ router.post(
   movieController.addMovie
 );
 router.get("/", middleware.verifyToken, movieController.getAllMovie);
+router.get("/search", middleware.verifyToken, movieController.searchMovie);
 router.get("/:id", middleware.verifyToken, movieController.getIdMovie);
 router.put(
   "/:id",
@@ -33,5 +34,6 @@ router.get(
   middleware.verifyToken,
   movieController.getMovieByCategory
 );
+
 
 module.exports = router;

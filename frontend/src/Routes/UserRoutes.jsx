@@ -7,19 +7,24 @@ import MovieByCategory from "../pages/Home/MovieByCategory";
 import IntroduceMovie from "../pages/Movie/IntroduceMovie";
 import WatchMovie from "../pages/Movie/WatchMovie";
 import UserLayout from "../Layout/UserLayout";
+import NotFound from "../component/ProtectPublic404/NotFound";
+import PublicRoute from "../component/ProtectPublic404/PublicRoute";
 
 const UserRoutes = () => {
   return (
     <Routes>
       <Route element={<UserLayout />}>
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/verifyotp" element={<VerifyOtp />} />
+        </Route>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/verifyotp" element={<VerifyOtp />} />
         <Route path="/category/:slug" element={<MovieByCategory />} />
         <Route path="/movie/:id" element={<IntroduceMovie />} />
         <Route path="/watch/:id" element={<WatchMovie />} />
         <Route path="/category/:slug/movie/:id" element={<IntroduceMovie />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

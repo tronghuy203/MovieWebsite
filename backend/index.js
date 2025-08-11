@@ -6,6 +6,8 @@ const connect = require("./config/connectDB");
 const authRouter = require("./routers/auth");
 const movieRouter = require("./routers/movie");
 const categoryRouter = require("./routers/category");
+const userRouter = require("./routers/user");
+const reviewRouter = require("./routers/review");
 const path = require("path");
 
 dotenv.config();
@@ -24,6 +26,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/v1/auth", authRouter);
 app.use("/v1/movie", movieRouter);
 app.use("/v1/category", categoryRouter);
+app.use("/v1/user", userRouter);
+app.use("/v1/review", reviewRouter);
 
 app.listen(8000, () => {
   console.log("Server run succuss");

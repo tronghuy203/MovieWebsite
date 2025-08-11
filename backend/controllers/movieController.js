@@ -199,6 +199,25 @@ const movieController = {
       return res.status(500).json(error);
     }
   },
+  searchMovie: async (req, res) => {
+    try {
+      const q = req.query.q;
+
+      if (!q) {
+        return res.json([]);
+      }
+      const search = await Movie.find(
+        { $text: { $search: q } },
+        { score: { $meta: "textScore" }, title: 1, posterUrl: 1 }
+      )
+        .sort({ score: { $meta: "textScore" } })
+        .limit(5);
+      res.status(200).json(search);
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error);
+    }
+  },
 };
 
 module.exports = { movieController, upload };

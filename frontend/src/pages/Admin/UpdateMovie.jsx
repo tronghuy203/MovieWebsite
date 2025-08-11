@@ -29,7 +29,6 @@ const UpdateMovieId = () => {
   const categoryList = useSelector(
     (state) => state.category.getAllCategory?.dataCategory
   );
-  const accessToken = user.accessToken;
   const axiosJWT = useMemo(
     () => createAxios(user, dispatch, getLoginSuccess),
     [user, dispatch]
@@ -37,7 +36,7 @@ const UpdateMovieId = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getIdMovie(id, dispatch, accessToken, axiosJWT);
+      const data = await getIdMovie(id, dispatch, axiosJWT);
       if (data) {
         const categoryIds = data.category.map((c) => c._id);
         console.log(categoryIds);
@@ -52,11 +51,11 @@ const UpdateMovieId = () => {
       }
     };
     fetchData();
-  }, [id, dispatch, accessToken, axiosJWT]);
+  }, [id, dispatch, axiosJWT]);
 
   const handleUpdateMovie = (e) => {
     e.preventDefault();
-    updateMovie(id, movie, dispatch, accessToken, axiosJWT);
+    updateMovie(id, movie, dispatch, axiosJWT);
     navigate("/admin/manage-movie");
   };
 

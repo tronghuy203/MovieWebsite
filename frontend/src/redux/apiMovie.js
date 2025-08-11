@@ -25,7 +25,6 @@ import {
 
 export const getAllMovie = async (
   dispatch,
-  accessToken,
   axiosJWT,
   page = 1,
   limit = 5
@@ -62,7 +61,6 @@ export const getUniqueCategory = async (dispatch) => {
 export const getMovieByCategory = async (
   category,
   dispatch,
-  accessToken,
   axiosJWT
 ) => {
   dispatch(movieByCategoryStart());
@@ -78,7 +76,7 @@ export const getMovieByCategory = async (
   }
 };
 
-export const getIdMovie = async (id, dispatch, accessToken, axiosJWT) => {
+export const getIdMovie = async (id, dispatch, axiosJWT) => {
   dispatch(getIdMovieStart());
   try {
     const res = await axiosJWT.get(`http://localhost:8000/v1/movie/${id}`);
@@ -89,7 +87,7 @@ export const getIdMovie = async (id, dispatch, accessToken, axiosJWT) => {
   }
 };
 
-export const createMovie = async (movie, dispatch, accessToken, axiosJWT) => {
+export const createMovie = async (movie, dispatch, axiosJWT) => {
   dispatch(createMovieStart());
   try {
     const res = await axiosJWT.post(
@@ -111,7 +109,6 @@ export const updateMovie = async (
   id,
   updateMovie,
   dispatch,
-  accessToken,
   axiosJWT
 ) => {
   dispatch(updateMovieIdStart());
@@ -131,7 +128,7 @@ export const updateMovie = async (
   }
 };
 
-export const deleteMovie = async (id, dispatch, accessToken, axiosJWT) => {
+export const deleteMovie = async (id, dispatch, axiosJWT) => {
   dispatch(deleteMovieStart());
   try {
     await axiosJWT.delete(`${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`);
@@ -140,3 +137,12 @@ export const deleteMovie = async (id, dispatch, accessToken, axiosJWT) => {
     dispatch(deleteMovieFailed());
   }
 };
+
+export const search = async(searchTerm, axiosJWT)=>{
+  try {
+    const res = await axiosJWT.get(`${process.env.REACT_APP_SERVERURL}/v1/movie/search?q=${encodeURIComponent(searchTerm)}`)
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
