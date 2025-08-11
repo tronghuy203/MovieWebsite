@@ -11,7 +11,6 @@ import { getLoginSuccess } from "../../redux/authSlice";
 const Home = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const movie = useSelector((state) => state.movie.movie?.dataMovie);
-  const accessToken = user?.accessToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const axiosJWT = useMemo(() => createAxios(user, dispatch, getLoginSuccess), [user, dispatch]);
@@ -20,14 +19,14 @@ const Home = () => {
     if (!user) {
       navigate("/login");
     }
-    getAllMovie(dispatch, accessToken, axiosJWT);
-  }, [user, navigate, dispatch, accessToken, axiosJWT]);
+    getAllMovie(dispatch, axiosJWT);
+  }, [user, navigate, dispatch, axiosJWT]);
 
   return (
     <div className="bg-[#191b24] h-full lg:h-full">
       <MovieSlider movieList={movie} />
       <Category/>
-      <SliderMovieCategory accessToken={accessToken} axiosJWT={axiosJWT}/>
+      <SliderMovieCategory axiosJWT={axiosJWT}/>
     </div>
   );
 };

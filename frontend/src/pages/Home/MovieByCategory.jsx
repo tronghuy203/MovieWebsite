@@ -16,15 +16,14 @@ const MovieByCategory = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.login?.currentUser);
 
-  const accessToken = user?.accessToken;
   const axiosJWT = useMemo(() => createAxios(user, dispatch,getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
-    getMovieByCategory(slug, dispatch, accessToken, axiosJWT);
-  }, [user, navigate, slug, dispatch, accessToken, axiosJWT]);
+    getMovieByCategory(slug, dispatch, axiosJWT);
+  }, [user, navigate, slug, dispatch, axiosJWT]);
 
   return (
     <div className="bg-[#191b24] w-full h-full lg:h-screen pb-5">

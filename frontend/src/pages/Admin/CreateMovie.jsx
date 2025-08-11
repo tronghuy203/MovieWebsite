@@ -10,7 +10,6 @@ const CreateMovie = () => {
   const categoryList = useSelector(
     (state) => state.category.getAllCategory?.dataCategory
   );
-  const accessToken = user.accessToken;
   const axiosJWT = useMemo(
     () => createAxios(user, dispatch, getLoginSuccess),
     [user, dispatch]
@@ -30,7 +29,7 @@ const CreateMovie = () => {
   });
   const handleCreateMovie = (e) => {
     e.preventDefault();
-    createMovie(newMovie, dispatch, accessToken, axiosJWT);
+    createMovie(newMovie, dispatch, axiosJWT);
   };
 
   return (

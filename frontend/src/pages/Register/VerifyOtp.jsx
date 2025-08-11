@@ -47,7 +47,7 @@ const VerifyOtp = () => {
     <div className="relative">
       <div className="absolute bg-slate-600 z-0 w-screen h-[750px]"></div>
 
-      <div className="absolute z-10 bg-slate-800 lg:w-[400px] lg:h-[300px] left-1/2 transform -translate-x-1/2 mt-10 rounded-lg">
+      <div className="absolute z-10 bg-slate-800 lg:w-[400px] lg:h-[300px] left-1/2 transform -translate-x-1/2 mt-20 rounded-lg ">
         <h1 className="font-bold text-white text-2xl text-center p-8">
           Nhập mã OTP
         </h1>
