@@ -62,7 +62,7 @@ const UpdateMovieId = () => {
   return (
     <div className="">
       <form onSubmit={handleUpdateMovie}>
-        <div className="w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
+        <div className="w-[350px] lg:w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
           <h1 className="font-bold text-white text-3xl text-center p-5">
             Cập nhật phim
           </h1>
@@ -77,7 +77,7 @@ const UpdateMovieId = () => {
               onChange={(e) =>
                 setMovie((prev) => ({ ...prev, title: e.target.value }))
               }
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
             />
           </div>
           <div className="flex flex-col">
@@ -89,10 +89,10 @@ const UpdateMovieId = () => {
               onChange={(e) =>
                 setMovie((prev) => ({ ...prev, description: e.target.value }))
               }
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
             />
           </div>
-          <div className="w-[600px] py-2">
+          <div className="w-[320px] lg:w-[600px]  py-2">
             <label className=" text-start text-white font-semibold mb-2">
               Thể loại
             </label>
@@ -123,7 +123,7 @@ const UpdateMovieId = () => {
               ))}
             </div>
           </div>
-          <div className="w-[600px] flex flex-col">
+          <div className="w-[320px] lg:w-[600px]  flex flex-col">
             <label className="block text-white font-semibold mb-1">
               Ảnh chính
             </label>
@@ -165,7 +165,7 @@ const UpdateMovieId = () => {
             />
           </div>
 
-          <div className="w-[600px] flex flex-col">
+          <div className="w-[320px] lg:w-[600px]  flex flex-col">
             <label className="block text-white font-semibold mb-1">
               Ảnh nền
             </label>
@@ -206,7 +206,7 @@ const UpdateMovieId = () => {
             />
           </div>
 
-          <div className="w-[600px] flex flex-col">
+          <div className="w-[320px] lg:w-[600px]  flex flex-col">
             <label className="block text-white font-semibold mb-1">
               Trailer
             </label>
@@ -246,7 +246,7 @@ const UpdateMovieId = () => {
               }
             />
           </div>
-          <div className="w-[600px] flex flex-col">
+          <div className="w-[320px] lg:w-[600px]  flex flex-col">
             <label className="block text-white font-semibold mb-1">Video</label>
 
             <label
@@ -296,7 +296,7 @@ const UpdateMovieId = () => {
               onChange={(e) =>
                 setMovie((prev) => ({ ...prev, releaseYear: e.target.value }))
               }
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
             />
           </div>
           <div className="flex flex-col">
@@ -310,7 +310,7 @@ const UpdateMovieId = () => {
               onChange={(e) =>
                 setMovie((prev) => ({ ...prev, country: e.target.value }))
               }
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
             />
           </div>
           <div className="flex flex-col">
@@ -324,7 +324,7 @@ const UpdateMovieId = () => {
               onChange={(e) =>
                 setMovie((prev) => ({ ...prev, duration: e.target.value }))
               }
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
             />
           </div>
           <div className="flex flex-col">
@@ -335,7 +335,7 @@ const UpdateMovieId = () => {
             <select
               name="status"
               value={movie.status}
-              className="px-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="px-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
               onChange={(e) =>
                 setMovie((prev) => ({ ...prev, status: e.target.value }))
               }

@@ -35,7 +35,7 @@ const CreateMovie = () => {
   return (
     <div className="bg-slate-400 py-12">
       <form onSubmit={handleCreateMovie}>
-        <div className="w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
+        <div className="w-[350px] lg:w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
           <h1 className="font-bold text-white  text-3xl text-center p-5">
             Thêm phim
           </h1>
@@ -49,7 +49,7 @@ const CreateMovie = () => {
               onChange={(e) =>
                 setNewMovie((prev) => ({ ...prev, title: e.target.value }))
               }
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg "
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg "
             />
           </div>
 
@@ -59,7 +59,7 @@ const CreateMovie = () => {
               type="text"
               name="description"
               placeholder="Nhập nội dung mô tả"
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
               onChange={(e) =>
                 setNewMovie((prev) => ({
                   ...prev,
@@ -68,7 +68,7 @@ const CreateMovie = () => {
               }
             />
           </div>
-          <div className="w-[600px] py-2">
+          <div className="w-[320px] lg:w-[600px]  py-2">
             <label className=" text-start text-white font-semibold mb-2">
               Thể loại
             </label>
@@ -104,7 +104,7 @@ const CreateMovie = () => {
             <label className="block text-white font-semibold mb-1">
               Ảnh chính
             </label>
-            <div className="w-[600px] ">
+            <div className="w-[320px] lg:w-[600px]  ">
               <label
                 htmlFor="poster"
                 className="flex items-center justify-center py-6 px-4 bg-white text-sky-600 border-2 border-dashed border-sky-300 rounded-lg cursor-pointer hover:bg-sky-50 transition"
@@ -154,7 +154,7 @@ const CreateMovie = () => {
               Ảnh nền
             </label>
 
-            <div className="w-[600px] ">
+            <div className="w-[320px] lg:w-[600px]  ">
               <label
                 htmlFor="poster2"
                 className="flex items-center justify-center py-6 px-4 bg-white text-sky-600 border-2 border-dashed border-sky-300 rounded-lg cursor-pointer hover:bg-sky-50 transition"
@@ -204,7 +204,7 @@ const CreateMovie = () => {
               Trailer
             </label>
 
-            <div className="w-[600px]">
+            <div className="w-[320px] lg:w-[600px] ">
               <label
                 htmlFor="trailer"
                 className="flex items-center justify-center px-4 py-6 bg-white text-sky-600 border-2 border-dashed border-sky-300 rounded-lg cursor-pointer hover:bg-sky-50 transition"
@@ -247,7 +247,7 @@ const CreateMovie = () => {
           <div className="flex flex-col">
             <label className="block text-white font-semibold mb-1">Video</label>
 
-            <div className=" w-[600px]">
+            <div className=" w-[320px] lg:w-[600px] ">
               <label
                 htmlFor="video-upload"
                 className="flex items-center justify-center px-4 py-6 bg-white text-sky-600 border-2 border-dashed border-sky-300 rounded-lg cursor-pointer hover:bg-sky-50 transition"
@@ -292,7 +292,7 @@ const CreateMovie = () => {
               type="text"
               name="releaseYear"
               placeholder="Nhập năm sản xuất"
-              className="pl-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="pl-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
               onChange={(e) =>
                 setNewMovie((prev) => ({
                   ...prev,
@@ -311,7 +311,7 @@ const CreateMovie = () => {
               type="text"
               name="country"
               placeholder="Nhập quốc gia"
-              className="px-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="px-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
               onChange={(e) =>
                 setNewMovie((prev) => ({ ...prev, country: e.target.value }))
               }
@@ -327,7 +327,7 @@ const CreateMovie = () => {
               type="text"
               name="duration"
               placeholder="Nhập thời lượng phim"
-              className="px-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="px-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
               onChange={(e) =>
                 setNewMovie((prev) => ({ ...prev, duration: e.target.value }))
               }
@@ -341,7 +341,7 @@ const CreateMovie = () => {
             <select
               name="status"
               value={newMovie.status}
-              className="px-3 py-2 mb-2 w-[600px] rounded-lg"
+              className="px-3 py-2 mb-2 w-[320px] lg:w-[600px]  rounded-lg"
               onChange={(e) =>
                 setNewMovie((prev) => ({ ...prev, status: e.target.value }))
               }
