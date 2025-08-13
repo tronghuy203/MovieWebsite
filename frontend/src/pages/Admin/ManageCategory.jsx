@@ -42,9 +42,9 @@ const Category = () => {
     await getAllCategory(dispatch, axiosJWT);
   };
   return (
-    <div className="bg-slate-400 w-full min-h-screen p-8">
+    <div className="bg-slate-400 w-full min-h-screen py-8">
       <div
-        className="max-w-3xl mx-auto bg-white shadow-2xl shadow-black rounded-xl p-6 
+        className="w-[340px] lg:w-[600px] mx-auto bg-white shadow-2xl shadow-black rounded-xl p-6 
             transition duration-300 transform hover:scale-[1.02] hover:shadow-black/80"
       >
         <h1 className="font-bold text-3xl text-center text-gray-800 mb-6">
@@ -82,7 +82,7 @@ const Category = () => {
                     type="text"
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
-                    className="border border-gray-300 rounded-md px-2 py-1"
+                    className="w-24 border border-gray-300 rounded-md px-2 py-1"
                   />
                   <button
                     onClick={() => handleUpdateCategory(cat._id)}

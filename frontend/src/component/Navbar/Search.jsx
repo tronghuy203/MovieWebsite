@@ -1,10 +1,13 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
+import { search } from "../../redux/apiMovie";
 
-export const Search = () => {
+export const Search = ({ axiosJWT, navigate }) => {
   const searchRef = useRef();
   const toggleIconRef = useRef();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     const handleClickOutSilde = (e) => {
@@ -15,6 +18,8 @@ export const Search = () => {
         !toggleIconRef.current.contains(e.target)
       ) {
         setIsSearchOpen(false);
+        setSuggestions([]);
+        setSearchTerm("");
       }
     };
     document.addEventListener("click", handleClickOutSilde);
@@ -24,16 +29,53 @@ export const Search = () => {
   });
   const handleToggleSearch = () => setIsSearchOpen((prev) => !prev);
 
+  useEffect(() => {
+    const handleInput = async () => {
+      const data = await search(searchTerm, axiosJWT);
+      setSuggestions(data);
+      console.log(data);
+    };
+    handleInput();
+  }, [searchTerm, axiosJWT]);
+
+  const handleSelectMovie = (id) => {
+    setSuggestions([]);
+    setSearchTerm("");
+    navigate(`/movie/${id}`);
+  };
   return (
     <div className="relative flex items-center justify-center">
       <div>
-        <div className="relative hidden lg:flex px-5 ">
+        <div ref={searchRef} className="relative hidden lg:flex px-5 ">
           <MagnifyingGlassIcon className="absolute mx-5 w-5 h-5 left-2 top-1/2 transform -translate-y-1/2 text-white" />
           <input
             type="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Tìm kiếm phim, diễn viên,..."
             className="bg-gray-600 border-0 py-5 rounded-md w-72 h-8 pl-8 text-white placeholder:text-white placeholder:text-sm bg-opacity-50"
           />
+        </div>
+        <div className="absolute hidden lg:flex">
+          {suggestions?.length > 0 && (
+            <div>
+              {suggestions?.map((sug) => (
+                <div key={sug._id}>
+                  <div
+                    onClick={() => handleSelectMovie(sug._id)}
+                    className="flex space-x-2 text-white bg-slate-900 w-64 h-auto p-5 ml-5 cursor-pointer"
+                  >
+                    <img
+                      src={`${process.env.REACT_APP_SERVERURL}/${sug.posterUrl}`}
+                      alt=""
+                      className="w-9 h-9"
+                    />
+                    <h3>{sug.title}</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <button
           ref={toggleIconRef}
@@ -62,7 +104,6 @@ export const Search = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-      
             >
               <path
                 strokeLinecap="round"
@@ -76,12 +117,33 @@ export const Search = () => {
       {isSearchOpen && (
         <div ref={searchRef}>
           <div className="relative">
-
             <input
               type="search"
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Tìm kiếm phim, diễn viên,..."
-              className="bg-gray-800 border-[1px] rounded-sm w-36 h-6 text-center text-white text-[10px] placeholder:text-white placeholder:text-[10px]"
+              className="bg-gray-800 border-[1px] rounded-sm w-48 h-6 text-center text-white text-[13px] placeholder:text-white placeholder:text-[10px]"
             />
+          </div>
+          <div className="absolute ">
+            {suggestions?.length > 0 && (
+              <div>
+                {suggestions?.map((sug) => (
+                  <div key={sug._id}>
+                    <div
+                      onClick={() => handleSelectMovie(sug._id)}
+                      className="flex space-x-2 text-xs lg:text-base text-white bg-slate-900 w-48 lg:w-64 h-auto p-5 shadow-slate-800 shadow-xl"
+                    >
+                      <img
+                        src={`${process.env.REACT_APP_SERVERURL}/${sug.posterUrl}`}
+                        alt=""
+                        className="w-7 h-7 lg:w-9 lg:h-9"
+                      />
+                      <h3>{sug.title}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

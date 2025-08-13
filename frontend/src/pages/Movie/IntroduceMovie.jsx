@@ -134,7 +134,7 @@ const IntroduceMovie = () => {
                   </div>
                 )}
               </div>
-              <div className="bg-[#ffffff0b] w-[670px] h-36 px-3 py-2 flex flex-col justify-center rounded-xl mb-5">
+              <div className="bg-[#ffffff0b] ml-3 w-[350px] lg:w-[670px] h-36 px-3 py-2 flex flex-col justify-center rounded-xl mb-5">
                 <textarea
                   type="text"
                   onChange={(e) => setComment(e.target.value)}
@@ -153,7 +153,7 @@ const IntroduceMovie = () => {
               <div>
                 {review?.map((review) => (
                   <div key={review._id} className="text-white">
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 ml-3">
                       <img
                         src={review.userId.avatar}
                         alt=""
@@ -161,7 +161,7 @@ const IntroduceMovie = () => {
                       />
                       <div>
                         <h2>{review.userId.username}</h2>
-                        <div className="text-[rgba(215,217,206,0.6)] w-[650px] mb-4">
+                        <div className="text-[rgba(215,217,206,0.6)] w-[300px] lg:w-[650px] mb-4 ">
                           {review.comment}
                         </div>
                       </div>

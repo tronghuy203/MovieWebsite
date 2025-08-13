@@ -4,7 +4,10 @@ import { deleteMovie, getAllMovie } from "../../redux/apiMovie";
 import { createAxios } from "../../createInstance";
 import { Link } from "react-router-dom";
 import { getLoginSuccess } from "../../redux/authSlice";
-import {ArrowLeftCircleIcon, ArrowRightCircleIcon} from "@heroicons/react/24/outline"
+import {
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const ManageMovie = () => {
   const [page, setPage] = useState(1);
@@ -12,7 +15,6 @@ const ManageMovie = () => {
   const totalPages = useSelector((state) => state.movie.movie?.totalPages);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const accessToken = user?.accessToken;
   const axiosJWT = useMemo(
     () => createAxios(user, dispatch, getLoginSuccess),
     [user, dispatch]
@@ -32,7 +34,7 @@ const ManageMovie = () => {
           Thêm phim
         </button>
       </Link>
-      <table className="w-[90%] min-h-[calc(100vh-200px)] mx-auto bg-white shadow-black shadow-2xl rounded-lg overflow-hidden">
+      <table className="hidden lg:block w-[90%] min-h-[calc(100vh-200px)] mx-auto bg-white shadow-black shadow-2xl rounded-lg overflow-hidden">
         <thead className="bg-[#252627] text-white h-14 ">
           <tr className="text-center">
             <th>Ảnh</th>
@@ -87,13 +89,75 @@ const ManageMovie = () => {
           ))}
         </tbody>
       </table>
+      <div className="lg:hidden space-y-4 min-h-screen">
+        {dataMovie.map((movie) => (
+          <div
+            key={movie._id}
+            className="flex items-start bg-white rounded-lg shadow-md p-3 m-2"
+          >
+            <img
+              src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl}`}
+              alt={movie.title}
+              className="w-20 h-32 object-cover rounded-md flex-shrink-0"
+            />
+
+            <div className="ml-3 flex flex-col justify-between">
+              <h3 className="font-bold text-lg text-gray-800">{movie.title}</h3>
+
+              <p className="text-sm text-gray-600">
+                <span className="font-semibold">Thể loại:</span>{" "}
+                {movie.category.map((cat, index) => (
+                  <span key={cat._id}>
+                    {cat.title}
+                    {index < movie.category.length - 1 && ", "}
+                  </span>
+                ))}
+              </p>
+
+              <p className="text-sm text-gray-600">
+                <span className="font-semibold">Năm:</span> {movie.releaseYear}
+              </p>
+
+              <p className="text-sm text-gray-600">
+                <span className="font-semibold">Trạng thái:</span>{" "}
+                {movie.status}
+              </p>
+               <div className="flex  gap-5 mt-5">
+                  <Link to={`/admin/update-movie/${movie._id}`}>
+                    <button className="bg-teal-700 text-white hover:bg-teal-500 px-3 py-1 rounded-lg">
+                      sửa
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => handleDeleteMovie(movie._id)}
+                    className="bg-red-700 text-white hover:bg-red-500 px-3 py-1 rounded-lg"
+                  >
+                    xóa
+                  </button>
+                </div>
+            </div>
+            
+          </div>
+        ))}
+      </div>
+
       <div className="flex items-center justify-center h-20">
-        <button disabled={page <= 1} onClick={()=>setPage(page - 1)} className="text-black disabled:opacity-30">
-          <ArrowLeftCircleIcon className=" w-10 h-10 "/>
+        <button
+          disabled={page <= 1}
+          onClick={() => setPage(page - 1)}
+          className="text-black disabled:opacity-30"
+        >
+          <ArrowLeftCircleIcon className=" w-10 h-10 " />
         </button>
-        <sapn>{page}/ {totalPages}</sapn>
-        <button disabled={page >= totalPages} onClick={()=> setPage(page + 1)} className="text-black disabled:opacity-30">
-          <ArrowRightCircleIcon className="w-10 h-10"/>
+        <span>
+          {page}/ {totalPages}
+        </span>
+        <button
+          disabled={page >= totalPages}
+          onClick={() => setPage(page + 1)}
+          className="text-black disabled:opacity-30"
+        >
+          <ArrowRightCircleIcon className="w-10 h-10" />
         </button>
       </div>
     </div>
