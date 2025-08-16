@@ -72,51 +72,54 @@ const Category = () => {
               key={cat._id}
               className="flex items-center justify-between bg-gray-100 rounded-md p-4"
             >
-              <div className="text-lg font-medium text-gray-800">
-                {cat.title}
-              </div>
-
               {editingCategory === cat._id ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full">
                   <input
                     type="text"
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
-                    className="w-24 border border-gray-300 rounded-md px-2 py-1"
+                    className="w-32 lg:w-52 border border-gray-300 rounded-md px-2 py-1"
                   />
-                  <button
-                    onClick={() => handleUpdateCategory(cat._id)}
-                    className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
-                  >
-                    Cập nhật
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEditingCategory(null);
-                      setEditTitle("");
-                    }}
-                    className="bg-gray-400 text-white px-3 py-1 rounded-md hover:bg-gray-500"
-                  >
-                    Hủy
-                  </button>
+                  <div className="w-full flex justify-end space-x-3">
+                    <button
+                      onClick={() => handleUpdateCategory(cat._id)}
+                      className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
+                    >
+                      Cập nhật
+                    </button>
+                    <button
+                      onClick={() => {
+                        setEditingCategory(null);
+                        setEditTitle("");
+                      }}
+                      className="bg-gray-400 text-white px-3 py-1 rounded-md hover:bg-gray-500"
+                    >
+                      Hủy
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setEditingCategory(cat._id);
-                      setEditTitle(cat.title);
-                    }}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
-                  >
-                    Sửa
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCategory(cat._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                  >
-                    Xóa
-                  </button>
+                <div className="flex gap-2 w-full">
+                  <div className="w-44 text-lg font-medium text-gray-800">
+                    {cat.title}
+                  </div>
+                  <div className="w-full flex justify-end space-x-3">
+                    <button
+                      onClick={() => {
+                        setEditingCategory(cat._id);
+                        setEditTitle(cat.title);
+                      }}
+                      className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
+                    >
+                      Sửa
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCategory(cat._id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                    >
+                      Xóa
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

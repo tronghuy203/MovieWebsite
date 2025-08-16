@@ -3,6 +3,7 @@ import authReducer from "./authSlice";
 import movieReducer from "./movieSlice";
 import categoryReducer from "./categorySlice";
 import reviewReducer from "./reviewSlice";
+import userReducer from "./userSlice";
 
 import {
   persistStore,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   movie: movieReducer,
   category: categoryReducer,
   review: reviewReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

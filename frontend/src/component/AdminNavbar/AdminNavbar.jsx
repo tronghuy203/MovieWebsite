@@ -47,12 +47,12 @@ const AdminNavbar = () => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M6 18 18 6M6 6l12 12"
               />
             </svg>
@@ -120,6 +120,19 @@ const AdminNavbar = () => {
                   } `}
                 >
                   Quản lý thể loại phim
+                </p>
+              </Link>
+            </li>
+             <li>
+              <Link to="/admin/manage-user">
+                <p
+                  className={`w-56 h-10 mx-auto flex items-center justify-center text-center text-white  rounded-lg ${
+                    location.pathname === "/admin/manage-user"
+                      ? "bg-[rgb(52,192,230)]"
+                      : "hover:bg-[rgba(91,101,104,0.4)]"
+                  } `}
+                >
+                  Quản lý người dùng
                 </p>
               </Link>
             </li>
