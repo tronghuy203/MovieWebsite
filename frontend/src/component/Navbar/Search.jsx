@@ -63,7 +63,7 @@ export const Search = ({ axiosJWT, navigate }) => {
                 <div key={sug._id}>
                   <div
                     onClick={() => handleSelectMovie(sug._id)}
-                    className="flex space-x-2 text-white bg-slate-900 w-64 h-auto p-5 ml-5 cursor-pointer"
+                    className="flex space-x-2 text-white bg-slate-900 w-72 h-auto p-5 ml-5 cursor-pointer"
                   >
                     <img
                       src={`${process.env.REACT_APP_SERVERURL}/${sug.posterUrl}`}

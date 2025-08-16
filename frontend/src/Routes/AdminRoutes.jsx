@@ -7,9 +7,10 @@ import CreateMovie from "../pages/Admin/CreateMovie";
 import Category from "../pages/Admin/ManageCategory";
 import NotFound from "../component/ProtectPublic404/NotFound";
 import ProtectedRoute from "../component/ProtectPublic404/ProtectRoute";
+import ManageUser from "../pages/Admin/ManageUser";
 
 
-const AdminRoutes = ({user}) => {
+const AdminRoutes = () => {
   return (
     <Routes>
       <Route element={<ProtectedRoute/>}>
@@ -19,6 +20,7 @@ const AdminRoutes = ({user}) => {
         <Route path="/update-movie/:id" element={<UpdateMovieId />}></Route>
         <Route path="/create-movie" element={<CreateMovie />}></Route>
         <Route path="/manage-category" element={<Category />}></Route>
+        <Route path="/manage-user" element={<ManageUser/>}> </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
       </Route>

@@ -9,25 +9,25 @@ const userController = {
       return res.status(500).json(error);
     }
   },
-  updateUserByAdmin: async (req, res) => {
-    try {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
-      if (!user) {
-        return res.status(404).json("Không tìm thấy người dùng.");
-      }
-      return res.status(200).json(user);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json(error);
-    }
-  },
+  // updateUserByAdmin: async (req, res) => {
+  //   try {
+  //     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+  //       new: true,
+  //     });
+  //     if (!user) {
+  //       return res.status(404).json("Không tìm thấy người dùng.");
+  //     }
+  //     return res.status(200).json(user);
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).json(error);
+  //   }
+  // },
   updateUser: async (req, res) => {
     try {
-      if (req.user.id === req.params.id) {
-        delete req.body.admin;
-        delete req.body.password;
+      if (req.user.id === req.params.id || req.user.admin) {
+        // delete req.body.admin;
+        // delete req.body.password;
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {
           new: true,
         }).select("-password");
