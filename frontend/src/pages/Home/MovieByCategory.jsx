@@ -19,9 +19,6 @@ const MovieByCategory = () => {
   const axiosJWT = useMemo(() => createAxios(user, dispatch,getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
     getMovieByCategory(slug, dispatch, axiosJWT);
   }, [user, navigate, slug, dispatch, axiosJWT]);
 

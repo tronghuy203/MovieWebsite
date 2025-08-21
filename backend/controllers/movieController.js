@@ -195,7 +195,6 @@ const movieController = {
         .sort({ createdAt: -1 });
       return res.status(200).json({ slug: categoryDoc.slug, getMovie });
     } catch (error) {
-      console.log(error);
       return res.status(500).json(error);
     }
   },
@@ -214,7 +213,6 @@ const movieController = {
         .limit(5);
       res.status(200).json(search);
     } catch (error) {
-      console.log(error)
       return res.status(500).json(error);
     }
   },
