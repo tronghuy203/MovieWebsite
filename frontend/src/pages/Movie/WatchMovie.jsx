@@ -24,9 +24,6 @@ const WatchMovie = () => {
   );
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
     getReview(id, dispatch, axiosJWT);
   }, [user, navigate, id, dispatch, accessToken, axiosJWT]);
 

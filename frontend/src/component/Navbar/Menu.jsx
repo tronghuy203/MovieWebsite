@@ -2,6 +2,8 @@ import {
   HomeIcon,
   UserIcon,
   ArrowLeftOnRectangleIcon,
+  ArrowRightEndOnRectangleIcon
+
 } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
 import { NavItem } from "./NavItem";
@@ -77,10 +79,14 @@ export const Menu = () => {
               </h3>
               {isAvatarOpen && (
                 <div className="absolute top-14 right-2 w-40 h-24 bg-[rgb(68,67,67)] bg-opacity-75 flex flex-col items-center rounded-lg">
-                  <div className="py-1 px-4 text-white text-center mt-2 hover:bg-black rounded-md cursor-pointer">
-                    Hồ sơ
+                  <div className="px-3 text-white text-center mt-2 hover:bg-black rounded-md cursor-pointer">
+                    <NavItem to="/profile" icon={<UserIcon className="w-5 h-5"/>} text="Hồ sơ"></NavItem>
                   </div>
-                  <button onClick={handleLogout} className="py-1 px-4 text-white hover:bg-red-600 rounded-md">
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-1 py-1 px-4 text-white hover:bg-red-600 rounded-md"
+                  >
+                    <ArrowRightEndOnRectangleIcon className="w-5 h-5"/>
                     Đăng xuất
                   </button>
                 </div>
@@ -147,10 +153,12 @@ export const Menu = () => {
                   />{" "}
                   {user.username}
                 </h3>
+                <NavItemMobile to="/profile" icon={<UserIcon className="w-5 h-5"/>} text="Hồ sơ"></NavItemMobile>
                 <button
                   onClick={handleLogout}
-                  className="text-white flex mx-auto"
+                  className="text-white flex items-center gap-1 mx-auto"
                 >
+                   <ArrowRightEndOnRectangleIcon className="w-5 h-5"/>
                   Đăng xuất
                 </button>
               </div>

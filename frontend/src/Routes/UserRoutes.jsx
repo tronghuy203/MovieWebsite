@@ -9,6 +9,8 @@ import WatchMovie from "../pages/Movie/WatchMovie";
 import UserLayout from "../Layout/UserLayout";
 import NotFound from "../component/ProtectPublic404/NotFound";
 import PublicRoute from "../component/ProtectPublic404/PublicRoute";
+import UserProtectedRoute from "../component/ProtectPublic404/UserProtectRoute";
+import Profile from "../pages/Profile/Profile";
 
 const UserRoutes = () => {
   return (
@@ -21,9 +23,16 @@ const UserRoutes = () => {
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/category/:slug" element={<MovieByCategory />} />
-        <Route path="/movie/:id" element={<IntroduceMovie />} />
-        <Route path="/watch/:id" element={<WatchMovie />} />
-        <Route path="/category/:slug/movie/:id" element={<IntroduceMovie />} />
+       
+        <Route element={<UserProtectedRoute />}>
+          <Route path="/movie/:id" element={<IntroduceMovie />} />
+          <Route path="/watch/:id" element={<WatchMovie />} />
+          <Route
+            path="/category/:slug/movie/:id"
+            element={<IntroduceMovie />}
+          />
+           <Route path="/profile" element={<Profile/>}/>
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

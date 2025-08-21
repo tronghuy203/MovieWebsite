@@ -28,11 +28,11 @@ const Navbar = () => {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <img src="/logo.png" alt="" className="h-7 w-7 lg:h-14 lg:w-14" />
+          <img src="/logo.png" alt="" className="h-9 w-9 lg:h-14 lg:w-14" />
           <Link to="/">
-            <h1 className="text-white font-bold text-xs lg:text-xl">PhimHay</h1>
+            <h1 className="text-white font-bold text-lg lg:text-xl">PhimHay</h1>
           </Link>
-          <Search axiosJWT={axiosJWT} navigate={navigate}/>
+          <Search axiosJWT={axiosJWT} navigate={navigate} />
         </div>
         <Menu />
       </div>

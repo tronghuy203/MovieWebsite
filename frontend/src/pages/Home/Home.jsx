@@ -16,9 +16,6 @@ const Home = () => {
   const axiosJWT = useMemo(() => createAxios(user, dispatch, getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
     getAllMovie(dispatch, axiosJWT);
   }, [user, navigate, dispatch, axiosJWT]);
 

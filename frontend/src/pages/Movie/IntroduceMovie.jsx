@@ -25,9 +25,6 @@ const IntroduceMovie = () => {
   );
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
     getIdMovie(id, dispatch, axiosJWT);
     getReview(id, dispatch, axiosJWT);
   }, [user, navigate, id, dispatch, axiosJWT]);
@@ -78,11 +75,11 @@ const IntroduceMovie = () => {
                 </div>
 
                 <div className="flex gap-4">
-                  {dataIdMovie.category?.map((cat, index) => (
+                  {dataIdMovie.category?.map((cat) => (
                     <div className="relative mx-auto lg:mx-0 text-white w-24 mt-2">
                       <div className="absolute inset-0 bg-black opacity-30 rounded-lg z-0"></div>
                       <div className="relative flex z-10 p-1 justify-center">
-                        <span key={index}>{cat.title}</span>
+                        <span key={cat._id}>{cat.title}</span>
                       </div>
                     </div>
                   ))}

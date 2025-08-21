@@ -3,9 +3,11 @@ import { createMovie } from "../../redux/apiMovie";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { getLoginSuccess } from "../../redux/authSlice";
+import { useNavigate } from 'react-router-dom';
 
 const CreateMovie = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const categoryList = useSelector(
     (state) => state.category.getAllCategory?.dataCategory
@@ -30,6 +32,7 @@ const CreateMovie = () => {
   const handleCreateMovie = (e) => {
     e.preventDefault();
     createMovie(newMovie, dispatch, axiosJWT);
+    navigate('/admin/manage-movie')
   };
 
   return (

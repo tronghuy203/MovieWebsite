@@ -38,7 +38,7 @@ export const MovieSlider = ({ movieList }) => {
                   {movie.description.slice(0, 80)}...
                 </p>
                 <p className="text-sm w-[400px] hidden lg:block">
-                  {movie.description.slice(0, 300)}...
+                  {movie.description.slice(0, 300)}
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 w-[210px] sm:mx-0 mx-auto">
