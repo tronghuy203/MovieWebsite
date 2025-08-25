@@ -4,9 +4,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { getLoginSuccess } from "../../redux/authSlice";
+import LoadingOverlay from "../../component/Loading/Loading";
 
 const UpdateMovieId = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.auth.login?.currentUser);
+  const categoryList = useSelector(
+    (state) => state.category.getAllCategory?.dataCategory
+  );
+  const updateMovieIsFetching = useSelector(
+    (state) => state.movie.getIdMovie?.isFetching
+  );
+
   const [movie, setMovie] = useState({
     title: "",
     description: "",
@@ -22,13 +34,7 @@ const UpdateMovieId = () => {
     previewPoster: null,
     previewPoster2: null,
   });
-  console.log(movie);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.login?.currentUser);
-  const categoryList = useSelector(
-    (state) => state.category.getAllCategory?.dataCategory
-  );
+
   const axiosJWT = useMemo(
     () => createAxios(user, dispatch, getLoginSuccess),
     [user, dispatch]
@@ -61,6 +67,7 @@ const UpdateMovieId = () => {
 
   return (
     <div className="">
+      <LoadingOverlay isFetching={updateMovieIsFetching} />
       <form onSubmit={handleUpdateMovie}>
         <div className="w-[350px] lg:w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
           <h1 className="font-bold text-white text-3xl text-center p-5">

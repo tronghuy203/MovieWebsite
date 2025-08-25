@@ -3,19 +3,21 @@ import { createMovie } from "../../redux/apiMovie";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { getLoginSuccess } from "../../redux/authSlice";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import LoadingOverlay from "../../component/Loading/Loading";
 
 const CreateMovie = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const user = useSelector((state) => state.auth.login?.currentUser);
   const categoryList = useSelector(
     (state) => state.category.getAllCategory?.dataCategory
   );
-  const axiosJWT = useMemo(
-    () => createAxios(user, dispatch, getLoginSuccess),
-    [user, dispatch]
+  const createMovieIsFetching = useSelector(
+    (state) => state.movie.createMovie?.isFetching
   );
+
   const [newMovie, setNewMovie] = useState({
     title: "",
     description: "",
@@ -29,14 +31,20 @@ const CreateMovie = () => {
     duration: "",
     status: "",
   });
+
+  const axiosJWT = useMemo(
+    () => createAxios(user, dispatch, getLoginSuccess),
+    [user, dispatch]
+  );
   const handleCreateMovie = (e) => {
     e.preventDefault();
     createMovie(newMovie, dispatch, axiosJWT);
-    navigate('/admin/manage-movie')
+    navigate("/admin/manage-movie");
   };
 
   return (
     <div className="bg-slate-400 py-12">
+      <LoadingOverlay isFetching={createMovieIsFetching} />
       <form onSubmit={handleCreateMovie}>
         <div className="w-[350px] lg:w-[700px] mx-auto space-y-1 rounded-xl bg-[#151921b4] flex flex-col items-center justify-center">
           <h1 className="font-bold text-white  text-3xl text-center p-5">

@@ -69,7 +69,15 @@ const ManageMovie = () => {
                 ))}
               </td>
               <td className="w-[100px]">{movie.releaseYear}</td>
-              <td className="w-[100px]">{movie.status}</td>
+              <td className="w-[100px]">
+                {movie.status === "completed"
+                  ? "Hoàn thành"
+                  : movie.status === "upcoming"
+                  ? "Sắp ra mắt"
+                  : movie.status === "airing"
+                  ? "Đang phát sóng"
+                  : "Không rõ"}{" "}
+              </td>
               <td className="w-[200px]">
                 <div className="flex justify-center gap-5">
                   <Link to={`/admin/update-movie/${movie._id}`}>
@@ -122,21 +130,20 @@ const ManageMovie = () => {
                 <span className="font-semibold">Trạng thái:</span>{" "}
                 {movie.status}
               </p>
-               <div className="flex  gap-5 mt-5">
-                  <Link to={`/admin/update-movie/${movie._id}`}>
-                    <button className="bg-teal-700 text-white hover:bg-teal-500 px-3 py-1 rounded-lg">
-                      sửa
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => handleDeleteMovie(movie._id)}
-                    className="bg-red-700 text-white hover:bg-red-500 px-3 py-1 rounded-lg"
-                  >
-                    xóa
+              <div className="flex  gap-5 mt-5">
+                <Link to={`/admin/update-movie/${movie._id}`}>
+                  <button className="bg-teal-700 text-white hover:bg-teal-500 px-3 py-1 rounded-lg">
+                    sửa
                   </button>
-                </div>
+                </Link>
+                <button
+                  onClick={() => handleDeleteMovie(movie._id)}
+                  className="bg-red-700 text-white hover:bg-red-500 px-3 py-1 rounded-lg"
+                >
+                  xóa
+                </button>
+              </div>
             </div>
-            
           </div>
         ))}
       </div>
