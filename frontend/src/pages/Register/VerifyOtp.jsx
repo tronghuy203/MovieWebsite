@@ -1,16 +1,21 @@
 import { useRef, useState } from "react";
 import { verifyOtp } from "../../redux/apiAuth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import LoadingOverlay from "../../component/Loading/Loading";
 
 const VerifyOtp = () => {
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
+
+  const OtpIsFetching = useSelector((state) => state.auth.otp?.isFetching);
+
   const inputRefs = useRef([]);
+
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [error, setError] = useState(null);
 
   const handleChange = (index, value) => {
     if (!/^[0-9]*$/.test(value)) return;
@@ -45,6 +50,7 @@ const VerifyOtp = () => {
 
   return (
     <div className="relative">
+      <LoadingOverlay isFetching={OtpIsFetching} />
       <div className="absolute bg-slate-600 z-0 w-screen h-[750px]"></div>
 
       <div className="absolute z-10 bg-slate-800 lg:w-[400px] lg:h-[300px] left-1/2 transform -translate-x-1/2 mt-20 rounded-lg ">

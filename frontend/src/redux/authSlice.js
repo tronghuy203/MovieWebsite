@@ -73,6 +73,14 @@ const authSlice = createSlice({
       state.login.isFetching = false;
       state.login.error = true;
     },
+    clearMessageErrorLogin: (state) =>{
+      state.login.error = false;
+      state.login.errorMessage = ""
+    },
+     clearMessageErrorRegister: (state) =>{
+      state.register.error = false;
+      state.register.errorMessage = ""
+    }
   },
 });
 
@@ -89,5 +97,7 @@ export const {
   getLogoutStart,
   getLogoutSuccess,
   getLogoutFailed,
+  clearMessageErrorRegister,
+  clearMessageErrorLogin
 } = authSlice.actions;
 export default authSlice.reducer;
