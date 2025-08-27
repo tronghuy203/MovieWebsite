@@ -14,7 +14,7 @@ router.post(
   middleware.verifyAdmin,
   movieController.addMovie
 );
-router.get("/", middleware.verifyToken, movieController.getAllMovie);
+router.get("/", movieController.getAllMovie);
 router.get("/search", middleware.verifyToken, movieController.searchMovie);
 router.get("/:id", middleware.verifyToken, movieController.getIdMovie);
 router.put(
@@ -31,7 +31,6 @@ router.put(
 router.delete("/:id", middleware.verifyAdmin, movieController.deleteMovie);
 router.get(
   "/category/:category",
-  middleware.verifyToken,
   movieController.getMovieByCategory
 );
 

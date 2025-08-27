@@ -19,7 +19,7 @@ const processQueue = (err, token = null) => {
 const refreshToken = async () => {
   try {
     const res = await axios.post(
-      "http://localhost:8000/v1/auth/refresh",
+      `${process.env.REACT_APP_SERVERURL}/v1/auth/refresh`,
       {},
       { withCredentials: true }
     );

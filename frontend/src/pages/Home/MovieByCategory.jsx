@@ -19,8 +19,8 @@ const MovieByCategory = () => {
   const axiosJWT = useMemo(() => createAxios(user, dispatch,getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
-    getMovieByCategory(slug, dispatch, axiosJWT);
-  }, [user, navigate, slug, dispatch, axiosJWT]);
+    getMovieByCategory(slug, dispatch);
+  }, [user, navigate, slug, dispatch]);
 
   return (
     <div className="bg-[#191b24] w-full h-full lg:h-screen pb-5">

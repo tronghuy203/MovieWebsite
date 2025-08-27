@@ -17,7 +17,7 @@ import axios from "axios";
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(getLoginStart());
   try {
-    const res = await axios.post("http://localhost:8000/v1/auth/login", user,{
+    const res = await axios.post(`${process.env.REACT_APP_SERVERURL}/v1/auth/login`, user,{
        withCredentials: true,
     });
     dispatch(getLoginSuccess(res.data));
@@ -35,7 +35,7 @@ export const registerUser = async (user, dispatch, navigate) => {
   dispatch(getRegisterStart());
   try {
     const res = await axios.post(
-      "http://localhost:8000/v1/auth/register",
+      `${process.env.REACT_APP_SERVERURL}/v1/auth/register`,
       user
     );
     dispatch(getRegisterSuccess(res.data));
@@ -50,7 +50,7 @@ export const verifyOtp = async (otp, dispatch, navigate) => {
   dispatch(getOtpStart());
   try {
     const res = await axios.post(
-      "http://localhost:8000/v1/auth/verifyOtp",
+      `${process.env.REACT_APP_SERVERURL}/v1/auth/verifyOtp`,
       otp
     );
     dispatch(getOtpSuccess(res.data));
@@ -60,11 +60,11 @@ export const verifyOtp = async (otp, dispatch, navigate) => {
   }
 };
 
-export const logout = async (dispatch, accessToken, navigate, axiosJWT) => {
+export const logout = async (dispatch, navigate, axiosJWT) => {
   dispatch(getLogoutStart());
   try {
     await axiosJWT.post(
-      "http://localhost:8000/v1/auth/logout",
+      `${process.env.REACT_APP_SERVERURL}/v1/auth/logout`,
       {}
     );
     dispatch(getLogoutSuccess());

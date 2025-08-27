@@ -52,7 +52,7 @@ export const Menu = () => {
   const handleToggleAvatar = () => setIsAvatarOpen((prev) => !prev);
 
   const handleLogout = () => {
-    logout(dispatch, accessToken, navigate, axiosJWT);
+    logout(dispatch, navigate, axiosJWT);
   };
 
   return (

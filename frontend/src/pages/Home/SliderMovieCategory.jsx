@@ -25,10 +25,10 @@ export const SliderMovieCategory = ({ axiosJWT }) => {
   useEffect(() => {
     if (categories?.length > 0) {
       categories.forEach((cat) => {
-        getMovieByCategory(cat.slug, dispatch, axiosJWT);
+        getMovieByCategory(cat.slug, dispatch);
       });
     }
-  }, [categories, dispatch, axiosJWT]);
+  }, [categories, dispatch]);
 
   const PrevArrow = (props) => {
     const { onClick } = props;
