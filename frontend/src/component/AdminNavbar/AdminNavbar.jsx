@@ -13,10 +13,9 @@ const AdminNavbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const accessToken = user?.accessToken;
   const axiosJWT = useMemo(() => createAxios(user, dispatch), [user, dispatch]);
   const handleLogout = () => {
-    logout(dispatch, accessToken, navigate, axiosJWT);
+    logout(dispatch, navigate, axiosJWT);
   };
   useEffect(() => {
     const handleClickOutside = (e) => {

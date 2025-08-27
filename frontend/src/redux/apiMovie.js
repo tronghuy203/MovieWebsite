@@ -25,14 +25,13 @@ import {
 
 export const getAllMovie = async (
   dispatch,
-  axiosJWT,
   page = 1,
   limit = 5
 ) => {
   dispatch(movieStart());
   try {
-    const res = await axiosJWT.get(
-      `http://localhost:8000/v1/movie?page=${page}&limit=${limit}`
+    const res = await axios.get(
+      `${process.env.REACT_APP_SERVERURL}/v1/movie?page=${page}&limit=${limit}`
     );
     dispatch(
       movieSuccess({
@@ -50,7 +49,7 @@ export const getUniqueCategory = async (dispatch) => {
   dispatch(categoryStart());
   try {
     const res = await axios.get(
-      "http://localhost:8000/v1/category/uniqueCategory"
+      `${process.env.REACT_APP_SERVERURL}/v1/category/uniqueCategory`
     );
     dispatch(categorySuccess(res.data));
   } catch (error) {
@@ -60,13 +59,12 @@ export const getUniqueCategory = async (dispatch) => {
 
 export const getMovieByCategory = async (
   category,
-  dispatch,
-  axiosJWT
+  dispatch,  
 ) => {
   dispatch(movieByCategoryStart());
   try {
-    const res = await axiosJWT.get(
-      `http://localhost:8000/v1/movie/category/${category}`
+    const res = await axios.get(
+      `${process.env.REACT_APP_SERVERURL}/v1/movie/category/${category}`
     );
     dispatch(
       movieByCategorySuccess({ slug: category, getMovie: res.data.getMovie })
@@ -79,7 +77,7 @@ export const getMovieByCategory = async (
 export const getIdMovie = async (id, dispatch, axiosJWT) => {
   dispatch(getIdMovieStart());
   try {
-    const res = await axiosJWT.get(`http://localhost:8000/v1/movie/${id}`);
+    const res = await axiosJWT.get(`${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`);
     dispatch(getIdMovieSuccess(res.data));
     return res.data;
   } catch (error) {

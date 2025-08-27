@@ -16,8 +16,8 @@ const Home = () => {
   const axiosJWT = useMemo(() => createAxios(user, dispatch, getLoginSuccess), [user, dispatch]);
 
   useEffect(() => {
-    getAllMovie(dispatch, axiosJWT);
-  }, [user, navigate, dispatch, axiosJWT]);
+    getAllMovie(dispatch );
+  }, [user, navigate, dispatch]);
 
   return (
     <div className="bg-[#191b24] h-full lg:h-full">
