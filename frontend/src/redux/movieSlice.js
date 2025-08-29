@@ -106,7 +106,7 @@ const movieSlice = createSlice({
     },
     createMovieFailed: (state)=>{
       state.createMovie.isFetching = false;
-      state.createMovie.error = false;
+      state.createMovie.error = true;
     },
     updateMovieIdStart: (state) => {
       state.getIdMovie.isFetching = true;

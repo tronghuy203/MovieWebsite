@@ -42,7 +42,7 @@ const WatchMovie = () => {
         <div className="w-full text-white">
           <video
             controls
-            src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.videoUrl}`}
+            src={dataIdMovie.videoUrl}
             alt={dataIdMovie.title}
             className="text-white w-full p-10"
           ></video>

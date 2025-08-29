@@ -23,11 +23,7 @@ import {
   updateMovieIdSuccess,
 } from "./movieSlice";
 
-export const getAllMovie = async (
-  dispatch,
-  page = 1,
-  limit = 5
-) => {
+export const getAllMovie = async (dispatch, page = 1, limit = 5) => {
   dispatch(movieStart());
   try {
     const res = await axios.get(
@@ -57,10 +53,7 @@ export const getUniqueCategory = async (dispatch) => {
   }
 };
 
-export const getMovieByCategory = async (
-  category,
-  dispatch,  
-) => {
+export const getMovieByCategory = async (category, dispatch) => {
   dispatch(movieByCategoryStart());
   try {
     const res = await axios.get(
@@ -77,7 +70,9 @@ export const getMovieByCategory = async (
 export const getIdMovie = async (id, dispatch, axiosJWT) => {
   dispatch(getIdMovieStart());
   try {
-    const res = await axiosJWT.get(`${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`);
+    const res = await axiosJWT.get(
+      `${process.env.REACT_APP_SERVERURL}/v1/movie/${id}`
+    );
     dispatch(getIdMovieSuccess(res.data));
     return res.data;
   } catch (error) {
@@ -97,18 +92,15 @@ export const createMovie = async (movie, dispatch, axiosJWT) => {
         },
       }
     );
+
     dispatch(createMovieSuccess(res.data));
   } catch (error) {
+    console.log(error);
     dispatch(createMovieFailed());
   }
 };
 
-export const updateMovie = async (
-  id,
-  updateMovie,
-  dispatch,
-  axiosJWT
-) => {
+export const updateMovie = async (id, updateMovie, dispatch, axiosJWT) => {
   dispatch(updateMovieIdStart());
   try {
     const res = await axiosJWT.put(
@@ -136,11 +128,15 @@ export const deleteMovie = async (id, dispatch, axiosJWT) => {
   }
 };
 
-export const search = async(searchTerm, axiosJWT)=>{
+export const search = async (searchTerm, axiosJWT) => {
   try {
-    const res = await axiosJWT.get(`${process.env.REACT_APP_SERVERURL}/v1/movie/search?q=${encodeURIComponent(searchTerm)}`)
+    const res = await axiosJWT.get(
+      `${
+        process.env.REACT_APP_SERVERURL
+      }/v1/movie/search?q=${encodeURIComponent(searchTerm)}`
+    );
     return res.data;
   } catch (error) {
     console.log(error);
   }
-}
+};
