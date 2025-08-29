@@ -105,7 +105,7 @@ export const SliderMovieCategory = ({ axiosJWT }) => {
                       onClick={handleClick}
                     >
                       <img
-                        src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl2}`}
+                        src={movie.posterUrl2}
                         alt={movie.title}
                         className="w-full h-48 object-cover rounded-lg"
                       />

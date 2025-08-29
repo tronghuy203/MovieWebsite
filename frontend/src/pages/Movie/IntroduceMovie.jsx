@@ -51,7 +51,7 @@ const IntroduceMovie = () => {
         <div className="">
           <div className="">
             <img
-              src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.posterUrl2}`}
+              src={dataIdMovie.posterUrl2}
               alt={dataIdMovie.title}
               className="relative w-full h-[500px] object-cover"
             />
@@ -64,7 +64,7 @@ const IntroduceMovie = () => {
               <div className="p-10 text-white space-y-4">
                 <div className="flex flex-col items-center lg:items-start space-y-4">
                   <img
-                    src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.posterUrl}`}
+                    src={dataIdMovie.posterUrl}
                     alt={dataIdMovie.title}
                     className="w-44 h-60 rounded-lg"
                   />
@@ -123,7 +123,7 @@ const IntroduceMovie = () => {
                       <video key={dataIdMovie.trailerUrl} controls>
                         {" "}
                         <source
-                          src={`${process.env.REACT_APP_SERVERURL}/${dataIdMovie.trailerUrl}`}
+                          src={dataIdMovie.trailerUrl}
                           type="video/mp4"
                         ></source>{" "}
                       </video>

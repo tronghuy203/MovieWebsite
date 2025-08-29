@@ -23,7 +23,7 @@ export const MovieSlider = ({ movieList }) => {
         {movieList.slice(-5).map((movie, index) => (
           <div key={index} className="relative w-[1024px] h-[500px]">
             <img
-              src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl2}`}
+              src={movie.posterUrl2}
               alt={movie.title}
               className="w-screen h-full object-cover"
             />
@@ -82,7 +82,7 @@ export const MovieSlider = ({ movieList }) => {
           {movieList.slice(-5).map((movie, index) => (
             <div key={index} className="px-1">
               <img
-                src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl2}`}
+                src={movie.posterUrl2}
                 alt={movie.title}
                 className={`w-16 h-12 rounded-md border-2 transition-all duration-200 ${
                   index === currentSlide ? "border-white" : "border-transparent"

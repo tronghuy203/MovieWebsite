@@ -5,6 +5,7 @@ import { createAxios } from "../../createInstance";
 import { getLoginSuccess } from "../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../../component/Loading/Loading";
+import { createMovieFailed } from "../../redux/movieSlice";
 
 const CreateMovie = () => {
   const dispatch = useDispatch();
@@ -36,10 +37,14 @@ const CreateMovie = () => {
     () => createAxios(user, dispatch, getLoginSuccess),
     [user, dispatch]
   );
-  const handleCreateMovie = (e) => {
+  const handleCreateMovie = async (e) => {
     e.preventDefault();
-    createMovie(newMovie, dispatch, axiosJWT);
-    navigate("/admin/manage-movie");
+    try {
+      await createMovie(newMovie, dispatch, axiosJWT);
+      navigate("/admin/manage-movie");
+    } catch (error) {
+      dispatch(createMovieFailed());
+    }
   };
 
   return (

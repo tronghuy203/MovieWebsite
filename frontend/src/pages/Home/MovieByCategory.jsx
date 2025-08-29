@@ -34,7 +34,7 @@ const MovieByCategory = () => {
                 <Link to={`movie/${movie._id}`}>
                   {" "}
                   <img
-                    src={`${process.env.REACT_APP_SERVERURL}/${movie.posterUrl}`}
+                    src={movie.posterUrl}
                     alt=""
                     className="w-40 h-52 hover:opacity-80 p-5 rounded-3xl"
                   />

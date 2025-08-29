@@ -51,17 +51,19 @@ const UpdateMovieId = () => {
           category: categoryIds,
           trailer: data.trailerUrl,
           video: data.videoUrl,
-          previewPoster: `${process.env.REACT_APP_SERVERURL}/${data.posterUrl}`,
-          previewPoster2: `${process.env.REACT_APP_SERVERURL}/${data.posterUrl2}`,
+          // previewPoster: `${process.env.REACT_APP_SERVERURL}/${data.posterUrl}`,
+          // previewPoster2: `${process.env.REACT_APP_SERVERURL}/${data.posterUrl2}`,
+          previewPoster: data.posterUrl,
+          previewPoster2: data.posterUrl2
         });
       }
     };
     fetchData();
   }, [id, dispatch, axiosJWT]);
 
-  const handleUpdateMovie = (e) => {
+  const handleUpdateMovie = async(e) => {
     e.preventDefault();
-    updateMovie(id, movie, dispatch, axiosJWT);
+    await updateMovie(id, movie, dispatch, axiosJWT);
     navigate("/admin/manage-movie");
   };
 
