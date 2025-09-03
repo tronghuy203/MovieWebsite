@@ -78,7 +78,7 @@ const AdminNavbar = () => {
         ref={menuRef}
         className={`w-64 bg-gray-900 text-white min-h-screen h-full py-3 fixed ${menuOpen ? "translate-x-0": "-translate-x-full"} lg:translate-x-0 lg:static` }
       >
-        <h2 className="text-xl font-bold mb-4 text-center">Admin Panel</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center text-sky-400">Bảng quản lý</h2>
         <ul>
           <div className="space-y-2 h-96">
             <li>
