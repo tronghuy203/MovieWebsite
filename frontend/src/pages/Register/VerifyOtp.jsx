@@ -28,6 +28,22 @@ const VerifyOtp = () => {
     }
   };
 
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").trim();
+    if (/^\d{6}$/.test(pastedData)) {
+      const newOtp = pastedData.split("");
+      setOtp(newOtp);
+      inputRefs.current[5].focus();
+    }
+  };
+
   const handleOtp = async (e) => {
     e.preventDefault();
     setError(null);
@@ -49,17 +65,25 @@ const VerifyOtp = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative min-h-[500px] bg-slate-600 flex items-center justify-center">
       <LoadingOverlay isFetching={OtpIsFetching} />
-      <div className="absolute bg-slate-600 z-0 w-screen h-[750px]"></div>
+      <div className="absolute bg-slate-600 z-0 w-full h-[550px]"></div>
 
-      <div className="absolute z-10 bg-slate-800 lg:w-[400px] lg:h-[300px] left-1/2 transform -translate-x-1/2 mt-20 rounded-lg ">
-        <h1 className="font-bold text-white text-2xl text-center p-8">
-          Nhập mã OTP
-        </h1>
-        <div>
-          {error && <p className="text-red-500 text-center pb-2">{error}</p>}
+      <div className="absolute z-10 bg-slate-800 w-[350px] lg:w-[400px] lg:h-auto left-1/2 transform -translate-x-1/2 mt-20 rounded-lg ">
+        <div className="p-5">
+          <h1 className="font-bold text-white text-2xl text-center">
+            Nhập mã OTP
+          </h1>
+          <span className="flex justify-center text-slate-500">
+            Mã đã được gửi đến email của bạn
+          </span>
         </div>
+
+        {error && (
+          <div className="w-80 mx-auto bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg mb-6 text-center">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleOtp} className="flex flex-col items-center">
           <div className="flex gap-2">
             {otp.map((value, index) => (
@@ -69,8 +93,10 @@ const VerifyOtp = () => {
                 maxLength={1}
                 value={value}
                 onChange={(e) => handleChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                onPaste={(e) => handlePaste(e)}
                 ref={(el) => (inputRefs.current[index] = el)}
-                className="w-10 h-10 text-center border rounded"
+                className="w-12 h-12 text-center border rounded"
               />
             ))}
           </div>
@@ -78,7 +104,13 @@ const VerifyOtp = () => {
             <button className="bg-slate-700 w-32 h-12 rounded-md text-white">
               Gửi
             </button>
-          </div>{" "}
+          </div>
+          <div className="text-center pb-10">
+            <p className="text-gray-500 text-sm mb-2">Chưa nhận được mã?</p>
+            <button className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+              Gửi lại mã OTP
+            </button>
+          </div>
         </form>
       </div>
     </div>
